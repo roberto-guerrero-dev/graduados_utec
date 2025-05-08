@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\GraduadosCarreras;
 use App\Models\Graduados;
+use App\Models\Correos;
+use App\Models\Telefonos;
+use App\Models\Carreras;
 
 class GraduadosController extends Controller
 {
@@ -11,6 +15,64 @@ class GraduadosController extends Controller
     {
         $graduados = Graduados::all();
         return view('graduados.index', compact('graduados'));
+    }
+
+    public function createForm()
+    {
+        $carreras = Carreras::all();
+        $correos = Correos::pluck('correo'); // solo los correos únicos
+        $telefonos = Telefonos::pluck('telefono');
+
+        return view('graduados.form', compact('carreras', 'correos', 'telefonos'));
+    }
+
+    public function storeFull(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'carnet_graduado' => 'required|string|unique:graduados,carnet_graduado',
+                'nombres' => 'required|string',
+                'apellidos' => 'required|string',
+                'genero' => 'required|string|in:M,F',
+                'codigo_carrera' => 'required|string|exists:carreras,codigo_carrera',
+                'fecha_graduacion' => 'required|date',
+                'ciclo_graduacion' => 'required|string',
+                'correos' => 'required|array',
+                'telefonos' => 'required|array',
+            ]);
+
+            $graduado = Graduados::create([
+                'carnet_graduado' => $validated['carnet_graduado'],
+                'nombres' => $validated['nombres'],
+                'apellidos' => $validated['apellidos'],
+                'genero' => $validated['genero'],
+            ]);
+
+            foreach ($validated['correos'] as $correo) {
+                Correos::create([
+                    'carnet_graduado' => $validated['carnet_graduado'],
+                    'correo' => $correo,
+                ]);
+            }
+
+            foreach ($validated['telefonos'] as $telefono) {
+                Telefonos::create([
+                    'carnet_graduado' => $validated['carnet_graduado'],
+                    'telefono' => $telefono,
+                ]);
+            }
+
+            GraduadosCarreras::create([
+                'carnet_graduado' => $validated['carnet_graduado'],
+                'codigo_carrera' => $validated['codigo_carrera'],
+                'fecha_graduacion' => $validated['fecha_graduacion'],
+                'ciclo_graduacion' => $validated['ciclo_graduacion'],
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function store(Request $request)

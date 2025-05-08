@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GraduadosController;
+use App\Http\Controllers\VGraduadosCarrerasController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -16,3 +17,6 @@ Route::get('/graduados/{id}/edit', [GraduadosController::class, 'edit'])->name('
 Route::put('/graduados/{id}', [GraduadosController::class, 'update'])->name('graduados.update');
 Route::delete('/graduados/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
 Route::get('/graduados/data', [GraduadosController::class, 'data']);
+Route::get('/graduados/form', [GraduadosController::class, 'createForm'])->name('graduados.form');
+Route::post('/graduados/store-full', [GraduadosController::class, 'storeFull'])->name('graduados.storeFull');
+Route::get('/graduados-carreras/data', [VGraduadosCarrerasController::class, 'data']);

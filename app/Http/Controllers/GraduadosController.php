@@ -44,4 +44,11 @@ class GraduadosController extends Controller
         Graduados::destroy($id);
         return response()->json(['success' => true]);
     }
+
+    public function data()
+    {
+        $graduados = Graduados::all(); // Asegúrate de usar el modelo correcto
+        return response()->json(['data' => $graduados]);
+    }
+
 }

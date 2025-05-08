@@ -1,34 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h3>Lista de Graduados</h3>
-    <button class="btn btn-primary mb-3" id="btnAgregar">Agregar Graduado</button>
-    <table class="table table-bordered" id="tablaGraduados">
-        <thead>
-            <tr>
-                <th>Carnet</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Género</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($graduados as $g)
-            <tr data-id="{{ $g->id_graduado }}">
-                <td>{{ $g->carnet_graduado }}</td>
-                <td>{{ $g->nombres }}</td>
-                <td>{{ $g->apellidos }}</td>
-                <td>{{ $g->genero }}</td>
-                <td>
-                    <button class="btn btn-sm btn-warning btnEditar">Editar</button>
-                    <button class="btn btn-sm btn-danger btnEliminar">Eliminar</button>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+<div class="container-fluid bg-light mt-4">
+    <h5>Lista de Graduados</h5>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+        <button class="btn btn-primary btn-sm mb-3" id="btnAgregar">Agregar Graduado</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="">
+                <table class="table table-bordered table-hover" id="tablaGraduados">
+                    <thead>
+                        <tr>
+                            <th>Carnet</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Género</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -69,7 +67,7 @@
           
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
         </div>
       </div>
     </form>
@@ -80,6 +78,8 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+
+    cargarTabla(); // Cargar la tabla al inicio
     // Agregar
     $('#btnAgregar').click(function() {
         $('#formGraduado')[0].reset();
@@ -89,8 +89,9 @@ $(document).ready(function() {
     });
 
     // Editar
-    $('.btnEditar').click(function() {
-        let id = $(this).closest('tr').data('id');
+    $('#tablaGraduados tbody').on('click', '.btnEditar', function() {
+        let id = $(this).data('id');
+        console.log(id);
         $.get(`/graduados/${id}/edit`, function(data) {
             $('[name="carnet_graduado"]').val(data.carnet_graduado);
             $('[name="nombres"]').val(data.nombres);
@@ -123,36 +124,45 @@ $(document).ready(function() {
     });
 
     // Eliminar
-    $('.btnEliminar').click(function() {
+    $('#tablaGraduados tbody').on('click', '.btnEliminar', function() {
         if (confirm('¿Seguro que deseas eliminar este graduado?')) {
-            let id = $(this).closest('tr').data('id');
+            let id = $(this).data('id');
             $.ajax({
                 url: `/graduados/${id}`,
                 method: 'DELETE',
                 data: { _token: '{{ csrf_token() }}' },
                 success: function(res) {
-                    location.reload();
+                    cargarTabla(); // recargar tabla
                 }
             });
         }
     });
 
     function cargarTabla() {
-        $.get('/graduados', function(data) {
-            let rows = '';
-            data.forEach(function(g) {
-                rows += `<tr data-id="${g.id_graduado}">
-                            <td>${g.carnet_graduado}</td>
-                            <td>${g.nombres}</td>
-                            <td>${g.apellidos}</td>
-                            <td>${g.genero}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning btnEditar">Editar</button>
-                                <button class="btn btn-sm btn-danger btnEliminar">Eliminar</button>
-                            </td>
-                        </tr>`;
-            });
-            $('#tablaGraduados tbody').html(rows);
+        
+        $('#tablaGraduados').DataTable({
+            destroy: true,
+            processing: true,
+            responsive: true,
+            ajax: '/graduados/data',
+            columns: [
+                { data: 'carnet_graduado' },
+                { data: 'nombres' },
+                { data: 'apellidos' },
+                { data: 'genero' },
+                {
+                    data: null,
+                    width: "10%",
+                    orderable: false,
+                    render: function(data, type, row) {
+                        return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <button class="btn btn-sm btn-warning btnEditar" data-id="${row.id_graduado}">Editar</button>
+                                    <button class="btn btn-sm btn-danger btnEliminar" data-id="${row.id_graduado}">Eliminar</button>
+                                </div>
+                        `;
+                    }
+                }
+            ]
         });
     }
 });

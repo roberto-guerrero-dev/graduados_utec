@@ -15,3 +15,4 @@ Route::post('/graduados', [GraduadosController::class, 'store'])->name('graduado
 Route::get('/graduados/{id}/edit', [GraduadosController::class, 'edit'])->name('graduados.edit');
 Route::put('/graduados/{id}', [GraduadosController::class, 'update'])->name('graduados.update');
 Route::delete('/graduados/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
+Route::get('/graduados/data', [GraduadosController::class, 'data']);

@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class FacultadesController extends Controller
 {
     public function index() {
-        return response()->json(Facultades::all());
+        $facultades = Facultades::all();
+        return view('facultades.facultades', compact('facultades'));
     }
 
     public function store(Request $request) {
@@ -27,5 +28,11 @@ class FacultadesController extends Controller
 
     public function destroy($id) {
         return response()->json(Facultades::destroy($id));
+    }
+
+    public function data()
+    {
+        $facultades = Facultades::all(); // Asegúrate de usar el modelo correcto
+        return response()->json(['data' => $facultades]);
     }
 }

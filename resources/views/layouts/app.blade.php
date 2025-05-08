@@ -43,11 +43,11 @@
         }
 
         #sidebar ul li a:hover {
-            background-color: #495057;
+            background-color: #870031;
         }
 
         #sidebar ul li a.active {
-            background-color: #495057;
+            background-color: #870031;
             font-weight: bold;
         }
 
@@ -75,18 +75,24 @@
         }
     </style>
 
-<div id="sidebar">
+<div id="sidebar" class="active">
     <ul>
-        <li><a href="{{ url('/inicio') }}" class="{{ request()->is('inicio') ? 'active' : '' }}">
+        <li><a href="{{ url('/home') }}" class="{{ request()->is('home') ? 'active' : '' }}">
             <i class="bi bi-house-door-fill"></i> Inicio</a></li>
-        <li><a href="{{ url('/acerca') }}" class="{{ request()->is('acerca') ? 'active' : '' }}">
-            <i class="bi bi-info-circle-fill"></i> Acerca de</a></li>
-        <li><a href="{{ url('/contacto') }}" class="{{ request()->is('contacto') ? 'active' : '' }}">
-            <i class="bi bi-envelope-fill"></i> Contacto</a></li>
+        <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados') ? 'active' : '' }}">
+        <i class="bi bi-mortarboard-fill"></i> Graduados</a></li>
+        <li><a href="{{ url('/facultades') }}" class="{{ request()->is('facultades') ? 'active' : '' }}">
+        <i class="bi bi-building"></i> Facultades</a></li>
+        <li><a href="{{ url('/carreras') }}" class="{{ request()->is('carreras') ? 'active' : '' }}">
+        <i class="bi bi-briefcase-fill"></i> Carreras</a></li>
+        <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados/form') ? 'active' : '' }}">
+        <i class="bi bi-file-earmark-bar-graph-fill"></i> Reportes</a></li>
+        <li><a href="{{ url('/register') }}" class="{{ request()->is('register') ? 'active' : '' }}">
+        <i class="bi bi-people-fill"></i> Usuarios</a></li>
     </ul>
 </div>
 
-    <div id="content">
+    <div id="content" class="shifted">
         <div class="topbar">
             <div class="hamburger" id="toggleSidebar">&#9776;</div>
             <form method="POST" action="{{ route('logout') }}">

@@ -87,13 +87,13 @@
     <ul>
         <li><a href="{{ url('/home') }}" class="{{ request()->is('home') ? 'active' : '' }}">
             <i class="bi bi-house-door-fill"></i> Inicio</a></li>
-        <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados') ? 'active' : '' }}">
+        <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados/form') ? 'active' : '' }}">
         <i class="bi bi-mortarboard-fill"></i> Graduados</a></li>
         <li><a href="{{ url('/facultades') }}" class="{{ request()->is('facultades') ? 'active' : '' }}">
         <i class="bi bi-building"></i> Facultades</a></li>
         <li><a href="{{ url('/carreras') }}" class="{{ request()->is('carreras') ? 'active' : '' }}">
         <i class="bi bi-briefcase-fill"></i> Carreras</a></li>
-        <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados/form') ? 'active' : '' }}">
+        <li><a href="{{ url('/graduados/reporte') }}" class="{{ request()->is('graduados/reporte') ? 'active' : '' }}">
         <i class="bi bi-file-earmark-bar-graph-fill"></i> Reportes</a></li>
         <li><a href="{{ url('/usuarios') }}" class="{{ request()->is('usuarios') ? 'active' : '' }}">
         <i class="bi bi-people-fill"></i> Usuarios</a></li>

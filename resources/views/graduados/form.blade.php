@@ -56,7 +56,7 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label>Género</label>
-                        <select name="genero" class="form-select" required>
+                        <select name="genero" id="genero" class="form-select" required>
                             <option value="">Seleccione</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
@@ -128,8 +128,8 @@
                     $('#formGraduadoCarrera')[0].reset();
                     $('.correos-select, .telefonos-select').val(null).trigger('change');
                 },
-                error: function () {
-                    alert('Error al guardar');
+                error: function (response) {
+                    alert('Error al registrar el graduado: ' + response.responseJSON.message);
                 }
             });
         });

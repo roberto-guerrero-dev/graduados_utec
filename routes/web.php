@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/carreras', [CarrerasController::class, 'index'])->name('carreras.carreras');
     Route::post('/carreras', [CarrerasController::class, 'store'])->name('carreras.store');
     Route::get('/carreras/data', [CarrerasController::class, 'data']);
+    Route::get('/graduados/reporte', [GraduadosController::class, 'reporteGraduados'])->name('graduados.reporte');
 });
 
 

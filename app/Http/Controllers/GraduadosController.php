@@ -8,6 +8,7 @@ use App\Models\Graduados;
 use App\Models\Correos;
 use App\Models\Telefonos;
 use App\Models\Carreras;
+use App\Models\VGraduadosCarreras;
 
 class GraduadosController extends Controller
 {
@@ -26,6 +27,12 @@ class GraduadosController extends Controller
         return view('graduados.form', compact('carreras', 'correos', 'telefonos'));
     }
 
+    public function reporteGraduados()
+    {
+        $graduados = VGraduadosCarreras::all();
+        return view('reportes.reportes', compact('graduados'));
+    }
+
     public function storeFull(Request $request)
     {
         try {
@@ -33,7 +40,7 @@ class GraduadosController extends Controller
                 'carnet_graduado' => 'required|string|unique:graduados,carnet_graduado',
                 'nombres' => 'required|string',
                 'apellidos' => 'required|string',
-                'genero' => 'required|string|in:M,F',
+                'genero' => 'required|string|in:Masculino,Femenino',
                 'codigo_carrera' => 'required|string|exists:carreras,codigo_carrera',
                 'fecha_graduacion' => 'required|date',
                 'ciclo_graduacion' => 'required|string',
@@ -70,7 +77,7 @@ class GraduadosController extends Controller
             ]);
 
             return response()->json(['success' => true]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

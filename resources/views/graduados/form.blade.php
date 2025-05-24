@@ -58,8 +58,8 @@
                         <label>Género</label>
                         <select name="genero" class="form-select" required>
                             <option value="">Seleccione</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -110,7 +110,7 @@
         cargarTabla(); // Cargar la tabla al inicio
 
         $('.correos-select, .telefonos-select').select2({
-            dropdownparent: $('#graduadoModal'),
+            dropdownParent: $('#graduadoModal'),
             tags: true,
             tokenSeparators: [',', ' '],
             placeholder: 'Seleccione opciones',
@@ -147,8 +147,27 @@
                     { data: 'ciclo_graduacion' },
                     { data: 'telefono' },
                     { data: 'correo' }
+                ],
+                dom: 'Bfrtip', // Agrega dom para mostrar los botones
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bi bi-file-excel"></i> Exportar Excel',
+                        title: 'Graduados por Carrera',
+                        className: 'btn btn-success btn-sm'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="bi bi-filetype-pdf"></i> Exportar PDF',
+                        title: 'Graduados por Carrera',
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                        className: 'btn btn-danger btn-sm'
+                    }
                 ]
             });
+
+            
         }
     });
 </script>

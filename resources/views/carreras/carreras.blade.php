@@ -42,7 +42,7 @@
           <div class="row">
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Codigo</label>
-                <input class="form-control form-control-sm mb-2" name="codigo_carrera" placeholder="Codigo">
+                <input class="form-control form-control-sm mb-2" name="codigo_carrera" placeholder="Codigo carrera">
             </div>
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Nombre</label>
@@ -52,7 +52,7 @@
           <div class="row">
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Modalidad</label>
-                <input class="form-control form-control-sm mb-2" name="modalidad" placeholder="Codigo">
+                <input class="form-control form-control-sm mb-2" name="modalidad" placeholder="modalidad">
             </div>
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Facultad</label>
@@ -89,7 +89,7 @@ $(document).ready(function() {
     $('#formCarreras').submit(function(e) {
         e.preventDefault();
         let method = 'POST';
-        let url = '/facultades';
+        let url = '/carreras';
 
         $.ajax({
             url: url,

@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-12">
             <div class="">
-                <table class="table table-bordered table-hover" id="tablaCarreras">
+                <table class="table table-striped table-bordered" id="tablaCarreras">
                     <thead>
                         <tr>
                             <th>Codigo Carrera</th>

@@ -11,7 +11,7 @@
             Registrar Graduado
         </button>
     </div>
-    <table id="tablaGraduadosCarreras" class="display table table-striped" style="width:100%">
+    <table id="tablaGraduadosCarreras" class=" table-striped table-hover" style="width:100%">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -23,6 +23,9 @@
             <th>Correo</th>
         </tr>
     </thead>
+    <tbody>
+        <!-- Los datos se cargarán mediante DataTables --> 
+    </tbody>
 </table>
 </div>
 
@@ -147,23 +150,6 @@
                     { data: 'ciclo_graduacion' },
                     { data: 'telefono' },
                     { data: 'correo' }
-                ],
-                dom: 'Bfrtip', // Agrega dom para mostrar los botones
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="bi bi-file-excel"></i> Exportar Excel',
-                        title: 'Graduados por Carrera',
-                        className: 'btn btn-success btn-sm'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="bi bi-filetype-pdf"></i> Exportar PDF',
-                        title: 'Graduados por Carrera',
-                        orientation: 'landscape',
-                        pageSize: 'A4',
-                        className: 'btn btn-danger btn-sm'
-                    }
                 ]
             });
 

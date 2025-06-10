@@ -7,6 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/datatablesb5theme/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/sweetalert/dist/sweetalert2.min.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('lib/datatables/datatables.min.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('lib/select2/select2-4.1.0-rc.0/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/fontawesome/fontawesome-free-6.7.2-web/css/all.min.css') }}" rel="stylesheet">
@@ -157,6 +158,7 @@
     <!-- Bootstrap JS -->
     <script src="{{ asset('lib/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('lib/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
     <!-- <script src="{{ asset('lib/datatables/datatables.min.js') }}"></script> -->
     <script src="{{ asset('lib/datatablesb5theme/datatables.min.js') }}"></script>
     <script src="{{ asset('lib/select2/select2-4.1.0-rc.0/dist/js/select2.min.js') }}"></script>

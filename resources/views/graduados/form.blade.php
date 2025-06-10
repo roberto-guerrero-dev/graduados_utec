@@ -111,7 +111,7 @@
 @section('scripts')
 <script>
     $(document).ready(function () {
-
+        Swal.fire('Esta es una prueba', '¡Hola, mundo!', 'success');
         cargarTabla(); // Cargar la tabla al inicio
 
         $('.correos-select, .telefonos-select').select2({

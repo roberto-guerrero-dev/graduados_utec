@@ -11,7 +11,8 @@
             Registrar Graduado
         </button>
     </div>
-    <table id="tablaGraduadosCarreras" class=" table-striped table-hover" style="width:100%">
+    <div class="table-responsive">
+        <table id="tablaGraduadosCarreras" class="table table-striped table-hover table-bordered" style="width:100%">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -27,6 +28,7 @@
         <!-- Los datos se cargarán mediante DataTables --> 
     </tbody>
 </table>
+    </div>
 </div>
 
 
@@ -141,13 +143,14 @@
             $('#tablaGraduadosCarreras').DataTable({
                 processing: true,
                 destroy: true,
+                responsive: true,
                 ajax: '/graduados-carreras/data',
                 columns: [
                     { data: 'nombre' },
                     { data: 'carrera' },
                     { data: 'facultad' },
                     { data: 'fecha_graduacion' },
-                    { data: 'ciclo_graduacion' },
+                    { data: 'ciclo_graduacion', width: '100px' },
                     { data: 'telefono' },
                     { data: 'correo' }
                 ]

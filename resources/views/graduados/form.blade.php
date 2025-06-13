@@ -7,7 +7,7 @@
     <h5>Registrar Graduado en una Carrera</h5>
     <div class="d-flex justify-content-end">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#graduadoModal">
+        <button type="button" class="btn bg-primary-custom btn-sm" data-bs-toggle="modal" data-bs-target="#graduadoModal">
             Registrar Graduado
         </button>
     </div>

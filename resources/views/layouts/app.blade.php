@@ -26,6 +26,11 @@
             --width-sidebar: 200px;
             --width-content: calc(100% - var(--width-sidebar));
             --height-li-img: 133.45px;
+            --bg-primary-custom: #5E0022;
+        }
+        .bg-primary-custom {
+            background-color: var(--bg-primary-custom) !important;
+            color: white !important;
         }
         html, body {
             margin: 0;
@@ -36,14 +41,33 @@
             display: grid;
             grid-template-rows: auto 1fr auto;
             margin-left: var(--width-sidebar);
-            padding: 10px 20px;
-            transition: margin-left 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+            word-wrap: break-word;
         }
         #main-container.adjusted {
             margin-left: 60px;
         }
+        header.topbar {
+            background-color:#f5f5f5;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            box-shadow: 0 2px 10px #a5a5a5;
+        }
+        footer {
+            background-color: #f9f9f9;
+            color: #a5a5a5;
+            text-align: center;
+            padding: 10px 20px;
+            border-top: 1px solid #e5e5e5;
+        }
         main {
             transition: all 0.5s ease-in-out;
+            padding: 10px 20px;
+        }
+        body {
+            background: linear-gradient(45deg,rgb(184, 129, 149), #bf0046);
         }
         #toggleSidebar {
             position: fixed;
@@ -116,6 +140,16 @@
         #sidebar.sidebar_shrink {
             width: 60px;
         }
+        .dropdown-menu-sm .dropdown-item {
+            padding: 5px; /* Ajusta el espaciado */
+            font-size: 14px;     /* Coincide con btn-sm */
+            margin: 0; /* Elimina el margen */
+        }
+        .dropdown-menu{
+            padding: 0;
+            margin: 0;
+        }
+
     </style>
     <aside id="sidebar" class="">
             <ul>
@@ -139,11 +173,25 @@
 <div class="hamburger" id="toggleSidebar"><i id="toggle" class="fa-solid fa-xmark"></i></div>
     <div id="main-container" class="">
         <header class="topbar">
-            
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-outline-dark btn-sm">Cerrar sesión {{ Auth::user()->name }}</button>
-            </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+  @csrf
+</form>
+
+            <!-- Dropdown -->
+            <div class="dropdown">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ Auth::user()->name }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-sm w-100" aria-labelledby="userDropdown">
+                <li>
+                <a class="dropdown-item" href="#"
+         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+         Cerrar sesión
+      </a>
+                </li>
+            </ul>
+            </div>
+
         </header>
 
         <main class=" mt-4">
@@ -159,6 +207,7 @@
     <script src="{{ asset('lib/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('lib/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('js/utils/customSweetAlert.js') }}"></script>
     <!-- <script src="{{ asset('lib/datatables/datatables.min.js') }}"></script> -->
     <script src="{{ asset('lib/datatablesb5theme/datatables.min.js') }}"></script>
     <script src="{{ asset('lib/select2/select2-4.1.0-rc.0/dist/js/select2.min.js') }}"></script>

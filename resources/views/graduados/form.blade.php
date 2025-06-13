@@ -3,7 +3,7 @@
 @section('title', 'Registrar Graduado en Carrera')
 
 @section('content')
-<div class="container bg-light mt-4">
+<div class="container bg-light mt-4" style="border-radius: 10px; padding: 20px; box-shadow: 0 0 40px #5E0022">
     <h5>Registrar Graduado en una Carrera</h5>
     <div class="d-flex justify-content-end">
         <!-- Button trigger modal -->
@@ -37,9 +37,9 @@
 <div class="modal fade" id="graduadoModal" tabindex="-1" aria-labelledby="graduadoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary-custom">
                 <h5 class="modal-title" id="graduadoModalLabel">Registrar Graduado</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-theme="dark" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
             <form id="formGraduadoCarrera">
@@ -111,7 +111,9 @@
 @section('scripts')
 <script>
     $(document).ready(function () {
-        Swal.fire('Esta es una prueba', '¡Hola, mundo!', 'success');
+
+        customSwal.showAlert('Prueba de SweetAlert personalizado','', '', 'OK', 'bg-primary-custom', 'success');
+        // Swal.fire('Esta es una prueba', '¡Hola, mundo!', 'success');
         cargarTabla(); // Cargar la tabla al inicio
 
         $('.correos-select, .telefonos-select').select2({

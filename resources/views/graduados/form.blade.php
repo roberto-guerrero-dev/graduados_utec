@@ -3,7 +3,7 @@
 @section('title', 'Registrar Graduado en Carrera')
 
 @section('content')
-<div class="container bg-light mt-4" style="border-radius: 10px; padding: 20px; box-shadow: 0 0 40px #5E0022">
+<div class="container bg-light mt-4" >
     <h5>Registrar Graduado en una Carrera</h5>
     <div class="d-flex justify-content-end">
         <!-- Button trigger modal -->

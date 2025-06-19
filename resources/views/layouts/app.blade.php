@@ -66,9 +66,9 @@
             transition: all 0.5s ease-in-out;
             padding: 10px 20px;
         }
-        body {
+        /* body {
             background: linear-gradient(45deg,rgb(184, 129, 149), #bf0046);
-        }
+        } */
         #toggleSidebar {
             position: fixed;
             top: 10px;
@@ -179,8 +179,8 @@
 
             <!-- Dropdown -->
             <div class="dropdown">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ Auth::user()->name }}
+            <button class="btn bg-primary-custom btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user"></i> {{ strtoupper(Auth::user()->name) }}
             </button>
             <ul class="dropdown-menu dropdown-menu-sm w-100" aria-labelledby="userDropdown">
                 <li>

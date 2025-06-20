@@ -29,6 +29,42 @@
             --height-li-img: 133.45px;
             --bg-primary-custom: #5E0022;
         }
+
+        /* Estilo para los enlaces de paginación (botones "siguiente", "anterior", números) */
+        .page-link {
+            color: #ffffff; /* Color del texto del enlace (por ejemplo, azul de Bootstrap) */
+            background-color: #5E0022 !important; /* Color de fondo normal */
+            border: 1px solid #7f2143 !important; /* Borde normal */
+        }
+
+        /* Estilo para los enlaces de paginación al pasar el ratón (hover) */
+        .page-link:hover {
+            color: #ffffff !important; /* Color del texto al pasar el ratón */
+            background-color: #5E0022 !important; /* Color de fondo al pasar el ratón (un azul más oscuro) */
+            border-color: #7f2143 !important; /* Color del borde al pasar el ratón */
+        }
+
+        /* Estilo para el botón de paginación activo (la página actual) */
+        /* DataTables usa .paginate_button.active > .page-link para el botón activo con Bootstrap */
+        .paginate_button.active > .page-link {
+            background-color: #5E0022 !important; /* Color de fondo para el botón activo (por ejemplo, verde) */
+            border-color: #7f2143 !important; /* Color del borde para el botón activo */
+            color: #ffffff !important; /* Color del texto para el botón activo */
+        }
+
+        /* Opcional: Si necesitas un estilo específico para el estado 'focus' */
+        .page-link:focus {
+            box-shadow: 0 0 0 0.25rem #7f2143 !important; /* Sombra al enfocar, ajusta al color que quieras */
+        }
+
+        /* Estilo para los botones de paginación deshabilitados (Anterior/Siguiente cuando no hay más páginas) */
+        .page-item.disabled .page-link {
+            color: #ffffff !important; /* Color del texto a blanco */
+            background-color: #7f2143 !important; /* Un gris más oscuro para el fondo, o el color que prefieras */
+            border-color: #7f2143 !important; /* Color del borde igual al fondo */
+            opacity: 0.9; /* Puedes ajustar la opacidad si quieres que se vean ligeramente atenuados */
+        }
+
         .bg-primary-custom {
             background-color: var(--bg-primary-custom) !important;
             color: white !important;

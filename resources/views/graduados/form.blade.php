@@ -56,21 +56,21 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label>Carnet</label>
-                                <input type="text" name="carnet_graduado" class="form-control form-control-sm" required>
+                                <input type="text" name="carnet_graduado" class="form-control form-control-sm" >
                             </div>
                             <div class="col-md-4">
                                 <label>Nombre</label>
-                                <input type="text" name="nombres" class="form-control form-control-sm" required>
+                                <input type="text" name="nombres" class="form-control form-control-sm" >
                             </div>
                             <div class="col-md-4">
                                 <label>Apellido</label>
-                                <input type="text" name="apellidos" class="form-control form-control-sm" required>
+                                <input type="text" name="apellidos" class="form-control form-control-sm" >
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label>Género</label>
-                                <select name="genero" id="genero" class="form-select form-select-sm" required>
+                                <select name="genero" id="genero" class="form-select form-select-sm" >
                                     <option value="">Seleccione</option>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
@@ -78,13 +78,13 @@
                             </div>
                             <div class="col-md-4">
                                 <label>Correos</label>
-                                <select name="correos[]" class="form-select form-select-sm correos-select" multiple required style="width: 100%;">
+                                <select name="correos[]" class="form-select form-select-sm correos-select" multiple  style="width: 100%;">
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label>Teléfonos</label>
-                                <select name="telefonos[]" class="form-select form-select-sm telefonos-select" multiple required style="width: 100%;">
+                                <select name="telefonos[]" class="form-select form-select-sm telefonos-select" multiple  style="width: 100%;">
                                     <option value=""></option>
                                 </select>
                             </div>
@@ -92,7 +92,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>Carrera</label>
-                                <select name="codigo_carrera" class="form-select form-select-sm" required>
+                                <select name="codigo_carrera" class="form-select form-select-sm" >
                                     <option value="">Seleccione carrera</option>
                                     @foreach ($carreras as $carrera)
                                         <option value="{{ $carrera->codigo_carrera }}">{{ $carrera->nombre }}</option>
@@ -101,11 +101,11 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Fecha Graduación</label>
-                                <input type="date" name="fecha_graduacion" class="form-control form-control-sm" required>
+                                <input type="date" name="fecha_graduacion" class="form-control form-control-sm" >
                             </div>
                             <div class="col-md-3">
                                 <label>Ciclo Graduación</label>
-                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm" required>
+                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm" >
                             </div>
                         </div>
 
@@ -147,8 +147,9 @@
                         $('.correos-select, .telefonos-select').val(null).trigger('change');
                     },
                     error: function(response) {
-                        alert('Error al registrar el graduado: ' + response.responseJSON
-                            .message);
+                        console.log(JSON.stringify(response));
+                        customSwal.showAlert('Complete todos los campos','', '', 'OK','bg-primary-custom', 'info');
+                            
                     }
                 });
             });

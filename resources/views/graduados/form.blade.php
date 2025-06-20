@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-12 d-flex justify-content-end mb-3">
                 <!-- Button trigger modal -->
-            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#graduadoModal">
+            <button type="button" class="btn bg-primary-custom btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#graduadoModal">
                 Registrar Graduado
             </button>
             </div>
@@ -44,6 +44,8 @@
     <!-- Modal -->
     <div class="modal fade" id="graduadoModal" tabindex="-1" aria-labelledby="graduadoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
+            <form id="formGraduadoCarrera">
+                @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary-custom">
                     <h5 class="modal-title" id="graduadoModalLabel">Registrar Graduado</h5>
@@ -51,26 +53,24 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formGraduadoCarrera">
-                        @csrf
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label>Carnet</label>
-                                <input type="text" name="carnet_graduado" class="form-control" required>
+                                <input type="text" name="carnet_graduado" class="form-control form-control-sm" required>
                             </div>
                             <div class="col-md-4">
                                 <label>Nombre</label>
-                                <input type="text" name="nombres" class="form-control" required>
+                                <input type="text" name="nombres" class="form-control form-control-sm" required>
                             </div>
                             <div class="col-md-4">
                                 <label>Apellido</label>
-                                <input type="text" name="apellidos" class="form-control" required>
+                                <input type="text" name="apellidos" class="form-control form-control-sm" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label>Género</label>
-                                <select name="genero" id="genero" class="form-select" required>
+                                <select name="genero" id="genero" class="form-select form-select-sm" required>
                                     <option value="">Seleccione</option>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
@@ -78,13 +78,13 @@
                             </div>
                             <div class="col-md-4">
                                 <label>Correos</label>
-                                <select name="correos[]" class="form-select correos-select" multiple required>
+                                <select name="correos[]" class="form-select form-select-sm correos-select" multiple required style="width: 100%;">
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label>Teléfonos</label>
-                                <select name="telefonos[]" class="form-select telefonos-select" multiple required>
+                                <select name="telefonos[]" class="form-select form-select-sm telefonos-select" multiple required style="width: 100%;">
                                     <option value=""></option>
                                 </select>
                             </div>
@@ -92,7 +92,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>Carrera</label>
-                                <select name="codigo_carrera" class="form-select" required>
+                                <select name="codigo_carrera" class="form-select form-select-sm" required>
                                     <option value="">Seleccione carrera</option>
                                     @foreach ($carreras as $carrera)
                                         <option value="{{ $carrera->codigo_carrera }}">{{ $carrera->nombre }}</option>
@@ -101,17 +101,19 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Fecha Graduación</label>
-                                <input type="date" name="fecha_graduacion" class="form-control" required>
+                                <input type="date" name="fecha_graduacion" class="form-control form-control-sm" required>
                             </div>
                             <div class="col-md-3">
                                 <label>Ciclo Graduación</label>
-                                <input type="text" name="ciclo_graduacion" class="form-control" required>
+                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm" required>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-primary-custom btn-sm fw-bold">Guardar</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -121,12 +123,11 @@
     <script>
         $(document).ready(function() {
 
-            customSwal.showAlert('Prueba de SweetAlert personalizado', '', '', 'OK', 'bg-primary-custom',
-            'success');
-            // Swal.fire('Esta es una prueba', '¡Hola, mundo!', 'success');
             cargarTabla(); // Cargar la tabla al inicio
 
             $('.correos-select, .telefonos-select').select2({
+                theme: 'bootstrap-5',
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 dropdownParent: $('#graduadoModal'),
                 tags: true,
                 tokenSeparators: [',', ' '],

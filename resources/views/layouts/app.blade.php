@@ -10,6 +10,7 @@
     <link href="{{ asset('lib/sweetalert/dist/sweetalert2.min.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('lib/datatables/datatables.min.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('lib/select2/select2-4.1.0-rc.0/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/select2-bootstrap-5-theme-1.3.0/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/fontawesome/fontawesome-free-6.7.2-web/css/all.min.css') }}" rel="stylesheet">
 </head>
 <body>

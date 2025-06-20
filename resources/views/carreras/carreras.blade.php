@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid bg-light mt-4">
+<div class="container bg-light mt-4">
     <div class="row">
         <h5 class="mt-3" style="color: var(--bg-primary-custom)">Lista de Carreras</h5>
     </div>
@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-12">
             <div class="">
-                <table class="table table-striped table-bordered" id="tablaCarreras">
+                <table class="table table-striped table-hover table-bordered" id="tablaCarreras">
                     <thead>
                         <tr>
                             <th>Codigo Carrera</th>

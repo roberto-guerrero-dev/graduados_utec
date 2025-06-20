@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-12">
             <div class="">
-                <table class="table table-bordered table-hover" id="tablaFacultades">
+                <table class="table table-striped table-hover table-bordered" id="tablaFacultades">
                     <thead>
                         <tr>
                             <th>Codigo Facultad</th>

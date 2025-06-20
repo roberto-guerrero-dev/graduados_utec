@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-12">
             <div class="">
-            <table id="usuariosTable" class="table table-striped table-bordered">
+            <table id="usuariosTable" class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Nombre</th>

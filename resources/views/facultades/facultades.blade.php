@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid bg-light mt-4">
-    <h5>Lista de Facultades</h5>
+<div class="container bg-light mt-4">
+    <div class="row">
+        <h5 class="mt-3" style="color: var(--bg-primary-custom)">Lista de Facultades</h5>
+    </div>
     <div class="row">
         <div class="d-flex justify-content-end">
-        <button class="btn btn-primary btn-sm mb-3" id="btnAgregar">Agregar Facultad</button>
+        <button class="btn bg-primary-custom btn-sm mb-3 fw-bold" id="btnAgregar">Agregar Facultad</button>
         </div>
     </div>
     <div class="row">
@@ -33,9 +35,9 @@
       @csrf
       <input type="hidden" id="graduado_id" name="id">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header bg-primary-custom">
           <h5 class="modal-title" id="modalLabel">Agregar Facultad</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-theme="dark" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -51,7 +53,7 @@
           
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+          <button type="submit" class="btn bg-primary-custom btn-sm fw-bold">Guardar</button>
         </div>
       </div>
     </form>

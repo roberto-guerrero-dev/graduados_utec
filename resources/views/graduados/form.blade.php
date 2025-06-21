@@ -177,10 +177,10 @@
                             width: '100px'
                         },
                         {
-                            data: 'telefono'
+                            data: 'telefonos'
                         },
                         {
-                            data: 'correo'
+                            data: 'correos'
                         }
                     ]
                 });

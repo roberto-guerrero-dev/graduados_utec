@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Email</th>
+                        <th>Correo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -52,6 +52,11 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
                         <input type="password" class="form-control form-control-sm" id="password" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Confirmar Contraseña</label>
+                        <input type="password" class="form-control form-control-sm" id="passwordConfirm" name="">
+                        <label for="" class="form-col-label-sm text-danger" id="msgPassword" style="display: none">Las contraseñas no coinciden</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -88,6 +93,10 @@ $(document).ready(function() {
 
     $('#formUsuario').submit(function(e) {
         e.preventDefault();
+        if (!confirmPassword()) {
+            customSwal.showAlert('Las contraseñas no coinciden','','','Ok','bg-primary-custom','warning');
+            return;
+        }
         let id = $('#usuario_id').val();
         let url = id ? `/usuarios/${id}` : '/usuarios';
         let method = id ? 'PUT' : 'POST';
@@ -114,6 +123,10 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#password, #passwordConfirm').on('input', function() {
+        confirmPassword();
+    });
 });
 
 function editarUsuario(id) {
@@ -139,6 +152,18 @@ function eliminarUsuario(id) {
                 table.ajax.reload();
             }
         });
+    }
+}
+
+function confirmPassword() {
+    let password = $('#password').val();
+    let confirmPassword = $('#passwordConfirm').val();
+    if (password !== confirmPassword) {
+        $('#msgPassword').fadeIn();
+        return false;
+    } else {
+        $('#msgPassword').fadeOut();
+        return true;
     }
 }
 </script>

@@ -105,7 +105,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Ciclo Graduación</label>
-                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm" >
+                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm" id="ciclo" >
                             </div>
                         </div>
 
@@ -185,7 +185,25 @@
                     ]
                 });
 
+            }
 
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentYear = currentDate.getFullYear();
+            const currentCiclo = `${currentMonth  < 7 ? '01' : '02'}-${currentYear}`;
+            const dynamicPlaceholders = [
+                { selector: '#ciclo', placeholder: 'Ej. ' + currentCiclo }
+            ];
+            setDynamicPlaceholder(dynamicPlaceholders);
+
+            function setDynamicPlaceholder(selectorsArray) {
+                if (Array.isArray(selectorsArray) && selectorsArray.length > 0) {
+                    selectorsArray.forEach(s => {
+                        $(s.selector).attr('placeholder', s.placeholder);
+                    });
+                } else {
+                    console.error('Invalid input: Expected an array of selectors.');
+                }
             }
         });
     </script>

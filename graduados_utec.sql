@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2025 a las 09:06:11
+-- Tiempo de generación: 21-06-2025 a las 19:14:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `graduados_utec`
 --
+CREATE DATABASE IF NOT EXISTS `graduados_utec` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `graduados_utec`;
 
 -- --------------------------------------------------------
 
@@ -256,7 +258,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('9GlfFiAqsZtPTsAIW1r6mhzizk5lacdel5hayy1A', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoickZ2ZFJId1FwaXFkRXdnV0xXdU41SjlpMWs0NjVtWmFiZjdKankzYSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ncmFkdWFkb3MvZm9ybSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzQ5NzgzMDM5O319', 1749789280);
+('aLsuaV8kT7e8YXs5IFOq4LGFmyew3oVb2rVOMPXs', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidUc2VFZvNVd4RU00SUhmNFFONVYwejVYMThsU3RjdlhFaDRWUGFQZiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ob21lIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NTA1MjA3MDQ7fX0=', 1750525860),
+('vrwGyJJ30bdVXpgnPbC4mlEZRFsam2LUduBFXRs4', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieFZDOXEwM0RpSHBIbXhwRTh5ejRNdnMxSjVzcENPNXd2b1JTdVBKWSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ncmFkdWFkb3MvcmVwb3J0ZSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUwMzkwODAyO319', 1750396916);
 
 -- --------------------------------------------------------
 
@@ -318,8 +321,8 @@ CREATE TABLE `v_graduados_carreras` (
 ,`facultad` varchar(100)
 ,`fecha_graduacion` date
 ,`ciclo_graduacion` varchar(20)
-,`telefono` varchar(15)
-,`correo` varchar(150)
+,`telefonos` mediumtext
+,`correos` mediumtext
 );
 
 -- --------------------------------------------------------
@@ -329,7 +332,7 @@ CREATE TABLE `v_graduados_carreras` (
 --
 DROP TABLE IF EXISTS `v_graduados_carreras`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_graduados_carreras`  AS SELECT `gc`.`id_graduados_carreras` AS `id`, concat(`g`.`nombres`,' ',`g`.`apellidos`) AS `nombre`, `c`.`nombre` AS `carrera`, `f`.`nombre_facultad` AS `facultad`, `gc`.`fecha_graduacion` AS `fecha_graduacion`, `gc`.`ciclo_graduacion` AS `ciclo_graduacion`, `t`.`telefono` AS `telefono`, `cr`.`correo` AS `correo` FROM (((((`graduados_carreras` `gc` join `graduados` `g` on(`gc`.`carnet_graduado` = `g`.`carnet_graduado`)) join `carreras` `c` on(`gc`.`codigo_carrera` = `c`.`codigo_carrera`)) join `facultades` `f` on(`c`.`codigo_facultad` = `f`.`codigo_facultad`)) join `telefonos` `t` on(`g`.`carnet_graduado` = `t`.`carnet_graduado`)) join `correos` `cr` on(`g`.`carnet_graduado` = `cr`.`carnet_graduado`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_graduados_carreras`  AS SELECT `gc`.`id_graduados_carreras` AS `id`, concat(`g`.`nombres`,' ',`g`.`apellidos`) AS `nombre`, `c`.`nombre` AS `carrera`, `f`.`nombre_facultad` AS `facultad`, `gc`.`fecha_graduacion` AS `fecha_graduacion`, `gc`.`ciclo_graduacion` AS `ciclo_graduacion`, group_concat(distinct `t`.`telefono` separator ', ') AS `telefonos`, group_concat(distinct `cr`.`correo` separator ', ') AS `correos` FROM (((((`graduados_carreras` `gc` join `graduados` `g` on(`gc`.`carnet_graduado` = `g`.`carnet_graduado`)) join `carreras` `c` on(`gc`.`codigo_carrera` = `c`.`codigo_carrera`)) join `facultades` `f` on(`c`.`codigo_facultad` = `f`.`codigo_facultad`)) left join `telefonos` `t` on(`g`.`carnet_graduado` = `t`.`carnet_graduado`)) left join `correos` `cr` on(`g`.`carnet_graduado` = `cr`.`carnet_graduado`)) GROUP BY `gc`.`id_graduados_carreras`, `g`.`nombres`, `g`.`apellidos`, `c`.`nombre`, `f`.`nombre_facultad`, `gc`.`fecha_graduacion`, `gc`.`ciclo_graduacion` ;
 
 --
 -- Índices para tablas volcadas

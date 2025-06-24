@@ -24,10 +24,12 @@
                         <th>Nombre</th>
                         <th>Carrera</th>
                         <th>Facultad</th>
+                        <th>Modalidad</th>
                         <th>Fecha Graduación</th>
                         <th>Ciclo</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -170,6 +172,9 @@
                             data: 'facultad'
                         },
                         {
+                            data: 'modalidad'
+                        },
+                        {
                             data: 'fecha_graduacion'
                         },
                         {
@@ -181,6 +186,17 @@
                         },
                         {
                             data: 'correos'
+                        },
+                        {
+                            data: null,
+                            render: function(data, type, row) {
+                                return `
+                                    <button class="btn btn-warning btn-sm" onclick="editarGraduado(${data.carnet_graduado})"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarGraduado(${data.carnet_graduado})"><i class="fa-solid fa-trash"></i></button>
+                                `;
+                            },
+                            orderable: false,
+                            searchable: false
                         }
                     ]
                 });

@@ -11,6 +11,6 @@ class Graduados extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'carnet_graduado', 'nombres', 'apellidos', 'genero'
+        'carnet_graduado', 'nombres', 'apellidos', 'genero', 'activo'
     ];
 }

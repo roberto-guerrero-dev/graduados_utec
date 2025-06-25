@@ -53,6 +53,7 @@ class GraduadosController extends Controller
                 'nombres' => $validated['nombres'],
                 'apellidos' => $validated['apellidos'],
                 'genero' => $validated['genero'],
+                'activo' => 1, // Asumimos que el graduado está activo al momento de crear
             ]);
 
             foreach ($validated['correos'] as $correo) {
@@ -76,19 +77,99 @@ class GraduadosController extends Controller
                 'ciclo_graduacion' => $validated['ciclo_graduacion'],
             ]);
 
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Graduado creado correctamente.'], 200);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'nombres' => 'required|string',
+                'apellidos' => 'required|string',
+                'genero' => 'required|string',
+                'codigo_carrera' => 'required|string',
+                'fecha_graduacion' => 'required|date',
+                'ciclo_graduacion' => 'required|string',
+                'correos' => 'required|array',
+                'telefonos' => 'required|array',
+            ]);
+
+            $graduadoCarrera = GraduadosCarreras::findOrFail($id);
+            $graduado = Graduados::where('carnet_graduado', $graduadoCarrera->carnet_graduado)->first();
+
+            $graduado->update([
+                'nombres' => $validated['nombres'],
+                'apellidos' => $validated['apellidos'],
+                'genero' => $validated['genero'],
+            ]);
+
+            $graduadoCarrera->update([
+                'codigo_carrera' => $validated['codigo_carrera'],
+                'fecha_graduacion' => $validated['fecha_graduacion'],
+                'ciclo_graduacion' => $validated['ciclo_graduacion'],
+            ]);
+
+            // Actualizar correos y teléfonos
+            Correos::where('carnet_graduado', $graduadoCarrera->carnet_graduado)->delete();
+            foreach ($validated['correos'] as $correo) {
+                Correos::create([
+                    'carnet_graduado' => $graduadoCarrera->carnet_graduado,
+                    'correo' => $correo,
+                ]);
+            }
+
+            Telefonos::where('carnet_graduado', $graduadoCarrera->carnet_graduado)->delete();
+            foreach ($validated['telefonos'] as $telefono) {
+                Telefonos::create([
+                    'carnet_graduado' => $graduadoCarrera->carnet_graduado,
+                    'telefono' => $telefono,
+                ]);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Graduado actualizado correctamente.']);
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+
     public function destroy($id)
     {
-        $registro = GraduadosCarreras::findOrFail($id);
-        $registro->delete(); // Esto solo marca como eliminado
+        $graduadoCarrera = GraduadosCarreras::findOrFail($id);
+        $graduado = Graduados::where('carnet_graduado', $graduadoCarrera->carnet_graduado)->first();
 
-        return response()->json(['success' => true, 'message' => 'Registro eliminado correctamente.']);
+        if ($graduado) {
+            $graduado->activo = 0;
+            $graduado->save();
+            return response()->json(['success' => true, 'message' => 'Graduado desactivado correctamente.'], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Graduado no encontrado'], 404);
+        }
     }
+
+
+    public function show($id)
+    {
+        $gc = GraduadosCarreras::findOrFail($id);
+        $g = Graduados::where('carnet_graduado', $gc->carnet_graduado)->first();
+
+        return response()->json([
+            'carnet_graduado' => $g->carnet_graduado,
+            'nombres' => $g->nombres,
+            'apellidos' => $g->apellidos,
+            'genero' => $g->genero,
+            'codigo_carrera' => $gc->codigo_carrera,
+            'fecha_graduacion' => $gc->fecha_graduacion,
+            'ciclo_graduacion' => $gc->ciclo_graduacion,
+            'correos' => Correos::where('carnet_graduado', $g->carnet_graduado)->pluck('correo'),
+            'telefonos' => Telefonos::where('carnet_graduado', $g->carnet_graduado)->pluck('telefono'),
+        ]);
+    }
+
 
 
     public function store(Request $request)
@@ -110,12 +191,12 @@ class GraduadosController extends Controller
         return response()->json($graduado);
     }
 
-    public function update(Request $request, $id)
-    {
-        $graduado = Graduados::findOrFail($id);
-        $graduado->update($request->all());
-        return response()->json(['success' => true, 'data' => $graduado]);
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     $graduado = Graduados::findOrFail($id);
+    //     $graduado->update($request->all());
+    //     return response()->json(['success' => true, 'data' => $graduado]);
+    // }
 
     // public function destroy($id)
     // {

@@ -10,33 +10,35 @@
         <div class="row">
             <div class="col-12 d-flex justify-content-end mb-3">
                 <!-- Button trigger modal -->
-            <button type="button" class="btn bg-primary-custom btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#graduadoModal">
-                Registrar Graduado
-            </button>
+                <button type="button" class="btn bg-primary-custom btn-sm fw-bold" data-bs-toggle="modal"
+                    data-bs-target="#graduadoModal">
+                    Registrar Graduado
+                </button>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="table-responsive">
-            <table id="tablaGraduadosCarreras" class="table table-striped table-hover table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Carrera</th>
-                        <th>Facultad</th>
-                        <th>Modalidad</th>
-                        <th>Fecha Graduación</th>
-                        <th>Ciclo</th>
-                        <th>Teléfono</th>
-                        <th>Correo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Los datos se cargarán mediante DataTables -->
-                </tbody>
-            </table>
-        </div>
+                    <table id="tablaGraduadosCarreras" class="table table-striped table-hover table-bordered"
+                        style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Carrera</th>
+                                <th>Facultad</th>
+                                <th>Modalidad</th>
+                                <th>Fecha Graduación</th>
+                                <th>Ciclo</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargarán mediante DataTables -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -48,31 +50,31 @@
         <div class="modal-dialog modal-xl">
             <form id="formGraduadoCarrera">
                 @csrf
-            <div class="modal-content">
-                <div class="modal-header bg-primary-custom">
-                    <h5 class="modal-title" id="graduadoModalLabel">Registrar Graduado</h5>
-                    <button type="button" class="btn-close" data-bs-theme="dark" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary-custom">
+                        <h5 class="modal-title" id="graduadoModalLabel">Registrar Graduado</h5>
+                        <button type="reset" class="btn-close" data-bs-theme="dark" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label>Carnet</label>
-                                <input type="text" name="carnet_graduado" class="form-control form-control-sm" >
+                                <input type="text" name="carnet_graduado" class="form-control form-control-sm">
                             </div>
                             <div class="col-md-4">
                                 <label>Nombre</label>
-                                <input type="text" name="nombres" class="form-control form-control-sm" >
+                                <input type="text" name="nombres" class="form-control form-control-sm">
                             </div>
                             <div class="col-md-4">
                                 <label>Apellido</label>
-                                <input type="text" name="apellidos" class="form-control form-control-sm" >
+                                <input type="text" name="apellidos" class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label>Género</label>
-                                <select name="genero" id="genero" class="form-select form-select-sm" >
+                                <select name="genero" id="genero" class="form-select form-select-sm">
                                     <option value="">Seleccione</option>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
@@ -80,13 +82,15 @@
                             </div>
                             <div class="col-md-4">
                                 <label>Correos</label>
-                                <select name="correos[]" class="form-select form-select-sm correos-select" multiple  style="width: 100%;">
+                                <select name="correos[]" class="form-select form-select-sm correos-select" multiple
+                                    style="width: 100%;">
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label>Teléfonos</label>
-                                <select name="telefonos[]" class="form-select form-select-sm telefonos-select" multiple  style="width: 100%;">
+                                <select name="telefonos[]" class="form-select form-select-sm telefonos-select" multiple
+                                    style="width: 100%;">
                                     <option value=""></option>
                                 </select>
                             </div>
@@ -94,7 +98,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>Carrera</label>
-                                <select name="codigo_carrera" class="form-select form-select-sm" >
+                                <select name="codigo_carrera" class="form-select form-select-sm">
                                     <option value="">Seleccione carrera</option>
                                     @foreach ($carreras as $carrera)
                                         <option value="{{ $carrera->codigo_carrera }}">{{ $carrera->nombre }}</option>
@@ -103,21 +107,23 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Fecha Graduación</label>
-                                <input type="date" name="fecha_graduacion" class="form-control form-control-sm" >
+                                <input type="date" name="fecha_graduacion" class="form-control form-control-sm">
                             </div>
                             <div class="col-md-3">
                                 <label>Ciclo Graduación</label>
-                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm" id="ciclo" >
+                                <input type="text" name="ciclo_graduacion" class="form-control form-control-sm"
+                                    id="ciclo">
                             </div>
                         </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn bg-primary-custom btn-sm fw-bold">Guardar</button>
-                </div>
-                </form>
-            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn bg-primary-custom btn-sm fw-bold">Guardar</button>
+                        <button type="reset" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+            </form>
         </div>
+    </div>
     </div>
 @endsection
 
@@ -129,7 +135,8 @@
 
             $('.correos-select, .telefonos-select').select2({
                 theme: 'bootstrap-5',
-                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                    'style',
                 dropdownParent: $('#graduadoModal'),
                 tags: true,
                 tokenSeparators: [',', ' '],
@@ -139,22 +146,50 @@
 
             $('#formGraduadoCarrera').submit(function(e) {
                 e.preventDefault();
+
+                // Validación
+                let camposVacios = false;
+
+                // Recorre todos los inputs, selects y select2 requeridos dentro del formulario
+                $('#formGraduadoCarrera')
+                    .find('input:not([type=hidden]), select')
+                    .each(function() {
+                        if (!$(this).val() || $(this).val().length === 0) {
+                            camposVacios = true;
+                            return false; // rompe el .each
+                        }
+                    });
+
+                if (camposVacios) {
+                    customSwal.showAlert('Complete todos los campos antes de guardar', '', '', 'Ok',
+                        'bg-primary-custom', 'warning');
+                    return; // Detiene la ejecución
+                }
+
+                let id = $(this).attr('data-id');
+                let url = id ? `/graduados-carreras/${id}` : '{{ route('graduados.storeFull') }}';
+                let method = id ? 'PUT' : 'POST';
+
                 $.ajax({
-                    url: '{{ route('graduados.storeFull') }}',
-                    method: 'POST',
+                    url: url,
+                    method: method,
                     data: $(this).serialize(),
                     success: function(response) {
-                        alert('Graduado registrado correctamente');
+                        customSwal.showAlert(response.message, '', '', 'Ok',
+                            'bg-primary-custom', 'success');
                         $('#formGraduadoCarrera')[0].reset();
                         $('.correos-select, .telefonos-select').val(null).trigger('change');
+                        $('#graduadoModal').modal('hide');
+                        $('#formGraduadoCarrera').removeAttr('data-id');
+                        $('#tablaGraduadosCarreras').DataTable().ajax.reload();
                     },
                     error: function(response) {
-                        console.log(JSON.stringify(response));
-                        customSwal.showAlert('Complete todos los campos','', '', 'OK','bg-primary-custom', 'info');
-                            
+                        console.log(response);
+                        alert('Ocurrió un error. Verifica los datos.');
                     }
                 });
             });
+
 
             function cargarTabla() {
                 $('#tablaGraduadosCarreras').DataTable({
@@ -209,9 +244,10 @@
             const currentMonth = currentDate.getMonth() + 1;
             const currentYear = currentDate.getFullYear();
             const currentCiclo = `${currentMonth  < 7 ? '01' : '02'}-${currentYear}`;
-            const dynamicPlaceholders = [
-                { selector: '#ciclo', placeholder: 'Ej. ' + currentCiclo }
-            ];
+            const dynamicPlaceholders = [{
+                selector: '#ciclo',
+                placeholder: 'Ej. ' + currentCiclo
+            }];
             setDynamicPlaceholder(dynamicPlaceholders);
 
             function setDynamicPlaceholder(selectorsArray) {
@@ -224,28 +260,72 @@
                 }
             }
 
-            
+
 
         });
 
         function eliminarGraduado(id) {
-                if (confirm('¿Estás seguro de eliminar este registro?')) {
-                    $.ajax({
-                        url: '/graduados-carreras/' + id,
-                        method: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            alert(response.message);
-                            $('#tablaGraduadosCarreras').DataTable().ajax.reload();
-                        },
-                        error: function(err) {
-                            alert('Error al eliminar');
-                            console.log(err);
-                        }
-                    });
-                }
+            if (confirm('¿Estás seguro de eliminar este registro?')) {
+                $.ajax({
+                    url: '/graduados-carreras/' + id,
+                    method: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                        $('#tablaGraduadosCarreras').DataTable().ajax.reload();
+                    },
+                    error: function(err) {
+                        alert('Error al eliminar');
+                        console.log(err);
+                    }
+                });
             }
+        }
+
+        function editarGraduado(id) {
+            $.get(`/graduados-carreras/${id}`, function(data) {
+                // Llenar el formulario del modal con los datos recibidos
+                $('[name="carnet_graduado"]').val(data.carnet_graduado).prop('disabled', true); // No se edita
+                $('[name="nombres"]').val(data.nombres);
+                $('[name="apellidos"]').val(data.apellidos);
+                $('[name="genero"]').val(data.genero);
+                $('[name="codigo_carrera"]').val(data.codigo_carrera);
+                $('[name="fecha_graduacion"]').val(data.fecha_graduacion);
+                $('[name="ciclo_graduacion"]').val(data.ciclo_graduacion);
+
+                // Llenar Select2 - Correos
+                let correosSelect = $('.correos-select');
+                correosSelect.empty();
+                data.correos.forEach(correo => {
+                    let option = new Option(correo, correo, true, true);
+                    correosSelect.append(option);
+                });
+                correosSelect.trigger('change');
+
+                // Llenar Select2 - Teléfonos
+                let telefonosSelect = $('.telefonos-select');
+                telefonosSelect.empty();
+                data.telefonos.forEach(telefono => {
+                    let option = new Option(telefono, telefono, true, true);
+                    telefonosSelect.append(option);
+                });
+                telefonosSelect.trigger('change');
+
+                // Agregar un atributo al formulario para saber que es edición
+                $('#formGraduadoCarrera').attr('data-id', id);
+                $('#graduadoModal').modal('show');
+            }).fail(function() {
+                alert('Error al obtener los datos del graduado');
+            });
+        }
+
+        $('#graduadoModal').on('hidden.bs.modal', function() {
+            $('#formGraduadoCarrera')[0].reset();
+            $('.correos-select, .telefonos-select').val(null).trigger('change');
+            $('#formGraduadoCarrera').removeAttr('data-id');
+            $('[name="carnet_graduado"]').prop('disabled', false); // Habilitar campo carnet
+        });
     </script>
 @endsection

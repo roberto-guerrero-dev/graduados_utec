@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/carreras/data', [CarrerasController::class, 'data']);
     Route::get('/graduados/reporte', [GraduadosController::class, 'reporteGraduados'])->name('graduados.reporte');
     Route::delete('/graduados-carreras/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
+    Route::put('/graduados-carreras/{id}', [GraduadosController::class, 'update'])->name('graduados.update');
+    Route::get('/graduados-carreras/{id}', [GraduadosController::class, 'show']);
 
 });
 

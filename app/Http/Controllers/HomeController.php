@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Graduados;
+use App\Models\Carreras;
+use App\Models\Facultades;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totalGraduados = Graduados::count();
+        $totalCarreras = Carreras::count();
+        $totalFacultades = Facultades::count();
+        return view('home', compact('totalGraduados', 'totalCarreras', 'totalFacultades'));
     }
 }

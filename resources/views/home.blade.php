@@ -14,6 +14,7 @@
                 <div class="card-body">
                     <i class="fas fa-user-graduate fa-4x mb-3 opacity-75" style="color: var(--bg-primary-custom)"></i>
                     <h5 class="card-title" style="color: var(--bg-primary-custom)">Graduados</h5>
+                    <span class="h2 d-block" style="color: var(--bg-primary-custom)">{{ $totalGraduados }}</span>
                     <p class="card-text" style="color: var(--bg-primary-custom)">Gestiona la información de los graduados.</p>
                     <a href="{{ url('/graduados/form') }}" class="" style="color: var(--bg-primary-custom)">Ver Graduados</a>
                 </div>
@@ -24,6 +25,7 @@
                 <div class="card-body">
                     <i class="fas fa-building-columns fa-4x mb-3 opacity-75" style="color: var(--bg-primary-custom)"></i>
                     <h5 class="card-title" style="color: var(--bg-primary-custom)">Facultades</h5>
+                    <span class="h2 d-block" style="color: var(--bg-primary-custom)">{{ $totalFacultades }}</span>
                     <p class="card-text" style="color: var(--bg-primary-custom)">Administra las facultades disponibles.</p>
                     <a href="{{ url('/facultades') }}" class="" style="color: var(--bg-primary-custom)">Ver Facultades</a>
                 </div>
@@ -34,6 +36,7 @@
                 <div class="card-body">
                     <i class="fas fa-book-open fa-4x mb-3 opacity-75" style="color: var(--bg-primary-custom)"></i>
                     <h5 class="card-title" style="color: var(--bg-primary-custom)">Carreras</h5>
+                    <span class="h2 d-block" style="color: var(--bg-primary-custom)">{{ $totalCarreras }}</span>
                     <p class="card-text" style="color: var(--bg-primary-custom)">Administra las carreras técnicas disponibles.</p>
                     <a href="{{ url('/carreras') }}" class="" style="color: var(--bg-primary-custom)">Ver Carreras</a>
                 </div>

@@ -27,7 +27,7 @@
 
                             {{-- Filtro por Modalidad --}}
                             <div class="col-md-3">
-                                <label for="modalidad" class="form-label">Modalidad:</label>
+                                <label for="modalidad" class="form-label">Modalidad :</label>
                                 <select class="form-select form-select-sm" id="modalidad" name="modalidad">
                                     <option value="">Seleccione una modalidad</option>
                                     <option value="presencial">Presencial</option>

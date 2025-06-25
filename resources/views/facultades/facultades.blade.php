@@ -18,6 +18,7 @@
                         <tr>
                             <th>Codigo Facultad</th>
                             <th>Nombre Facultad</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,7 +101,19 @@ $(document).ready(function() {
             ajax: '/facultades/data',
             columns: [
                 { data: 'codigo_facultad' },
-                { data: 'nombre_facultad' }
+                { data: 'nombre_facultad' },
+                {
+                    data: null,
+                    width: '80px',
+                    render: function(data) {
+                        return `
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-warning btn-sm" onclick="editarFacultad(${data.id})"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarFacultad(${data.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        `;
+                    }
+                }
             ]
         });
     }

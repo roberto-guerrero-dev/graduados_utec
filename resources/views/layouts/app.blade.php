@@ -245,6 +245,7 @@
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('lib/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('js/utils/customSweetAlert.js') }}"></script>
+    <script src="{{ asset('js/utils/regEx.js') }}"></script>
     <!-- <script src="{{ asset('lib/datatables/datatables.min.js') }}"></script> -->
     <script src="{{ asset('lib/datatablesb5theme/datatables.min.js') }}"></script>
     <script src="{{ asset('lib/select2/select2-4.1.0-rc.0/dist/js/select2.min.js') }}"></script>

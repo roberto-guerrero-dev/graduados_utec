@@ -59,8 +59,9 @@
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <label>Carnet</label>
-                                <input type="text" name="carnet_graduado" class="form-control form-control-sm">
+                                <label>Carnet (no debe llevar guiones ni espacios)</label>
+                                <input type="text" name="carnet_graduado" class="form-control form-control-sm"
+                                    placeholder="Ej. 2717932022">
                             </div>
                             <div class="col-md-4">
                                 <label>Nombre</label>
@@ -166,6 +167,37 @@
                     return; // Detiene la ejecución
                 }
 
+                if ($('[name="ciclo_graduacion"]').hasClass('is-invalid')) {
+                    customSwal.showAlert('El ciclo ingresado no es válido', '', '', 'Ok',
+                        'bg-primary-custom', 'warning');
+                    return; // Detiene la ejecución
+                }
+
+                let correos = $('.correos-select').val();
+                let telefonos = $('.telefonos-select').val();
+                if (!correosValidos(correos)) {
+                    customSwal.showAlert('Uno o más correos no son válidos', '', '', 'Ok',
+                        'bg-primary-custom', 'warning');
+                    return; // Detiene la ejecución
+                }
+
+                if (!telefonosValidos(telefonos)) {
+                    customSwal.showAlert('Uno o más teléfonos no son válidos', '', '', 'Ok',
+                        'bg-primary-custom', 'warning');
+                    return; // Detiene la ejecución
+                }
+
+                const fechaGraduacion = $('[name="fecha_graduacion"]').val();
+                const fechaIngresada = new Date(fechaGraduacion);
+                const hoy = new Date();
+                hoy.setHours(0, 0, 0, 0);
+
+                if (fechaIngresada > hoy) {
+                    customSwal.showAlert('La fecha de graduación no puede ser futura', '', '', 'Ok',
+                        'bg-primary-custom', 'warning');
+                    return;
+                }
+
                 let id = $(this).attr('data-id');
                 let url = id ? `/graduados-carreras/${id}` : '{{ route('graduados.storeFull') }}';
                 let method = id ? 'PUT' : 'POST';
@@ -196,6 +228,9 @@
                     processing: true,
                     destroy: true,
                     responsive: true,
+                    language: {
+                        url: '/assets/lang/es-ES.json'
+                    },
                     ajax: '/graduados-carreras/data',
                     columns: [{
                             data: 'nombre'
@@ -327,5 +362,27 @@
             $('#formGraduadoCarrera').removeAttr('data-id');
             $('[name="carnet_graduado"]').prop('disabled', false); // Habilitar campo carnet
         });
+
+        const cicloRegex = oRegEx.cicloRegEx();
+        $('#ciclo').on('input', function() {
+            let ciclo = $(this).val();
+            if (cicloRegex.test(ciclo)) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            } else {
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            }
+        });
+
+        function correosValidos(correos) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return correos.every(correo => emailRegex.test(correo));
+        }
+
+        function telefonosValidos(telefonos) {
+            const regexSV = /^[267]\d{7}$/; // El Salvador
+            const regexUS = /^\d{10}$/; // Estados Unidos
+
+            return telefonos.every(num => regexSV.test(num) || regexUS.test(num));
+        }
     </script>
 @endsection

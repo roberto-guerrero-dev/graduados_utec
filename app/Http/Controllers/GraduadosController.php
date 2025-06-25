@@ -10,6 +10,7 @@ use App\Models\Telefonos;
 use App\Models\Carreras;
 use App\Models\VGraduadosCarreras;
 use App\Models\Facultades;
+use Illuminate\Support\Facades\DB;
 
 class GraduadosController extends Controller
 {
@@ -18,6 +19,23 @@ class GraduadosController extends Controller
         $graduados = Graduados::all();
         return view('graduados.index', compact('graduados'));
     }
+
+    public function buscarGraduados(Request $request)
+    {
+        $data = [
+            $request->filled('fecha_inicio') ? $request->input('fecha_inicio') : null,
+            $request->filled('fecha_fin') ? $request->input('fecha_fin') : null,
+            $request->filled('modalidad') ? $request->input('modalidad') : null,
+            $request->filled('genero') ? $request->input('genero') : null,
+            $request->filled('carrera') ? $request->input('carrera') : null,
+            $request->filled('facultad') ? $request->input('facultad') : null,
+        ];
+
+        $resultados = DB::select('CALL SP_BuscarGraduados(?, ?, ?, ?, ?, ?)', $data);
+
+        return response()->json(['data' => $resultados]); // DataTables espera la key "data"
+    }
+
 
     public function createForm()
     {
@@ -33,7 +51,7 @@ class GraduadosController extends Controller
         $carreras = Carreras::all();
         $facultades = Facultades::all();
         $graduados = VGraduadosCarreras::all();
-        return view('reportes.reportes', compact('graduados'));
+        return view('reportes.reportes', compact('carreras', 'facultades', 'graduados'));
     }
 
     public function storeFull(Request $request)

@@ -191,8 +191,10 @@
                             data: null,
                             render: function(data, type, row) {
                                 return `
-                                    <button class="btn btn-warning btn-sm" onclick="editarGraduado(${data.carnet_graduado})"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-danger btn-sm" onclick="eliminarGraduado(${data.carnet_graduado})"><i class="fa-solid fa-trash"></i></button>
+                                <div class="btn-group">
+                                    <button class="btn btn-warning btn-sm" onclick="editarGraduado(${data.id})"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarGraduado(${data.id})"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                                 `;
                             },
                             orderable: false,
@@ -221,6 +223,29 @@
                     console.error('Invalid input: Expected an array of selectors.');
                 }
             }
+
+            
+
         });
+
+        function eliminarGraduado(id) {
+                if (confirm('¿Estás seguro de eliminar este registro?')) {
+                    $.ajax({
+                        url: '/graduados-carreras/' + id,
+                        method: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            alert(response.message);
+                            $('#tablaGraduadosCarreras').DataTable().ajax.reload();
+                        },
+                        error: function(err) {
+                            alert('Error al eliminar');
+                            console.log(err);
+                        }
+                    });
+                }
+            }
     </script>
 @endsection

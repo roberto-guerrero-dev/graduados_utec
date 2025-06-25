@@ -82,6 +82,15 @@ class GraduadosController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $registro = GraduadosCarreras::findOrFail($id);
+        $registro->delete(); // Esto solo marca como eliminado
+
+        return response()->json(['success' => true, 'message' => 'Registro eliminado correctamente.']);
+    }
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -108,11 +117,11 @@ class GraduadosController extends Controller
         return response()->json(['success' => true, 'data' => $graduado]);
     }
 
-    public function destroy($id)
-    {
-        Graduados::destroy($id);
-        return response()->json(['success' => true]);
-    }
+    // public function destroy($id)
+    // {
+    //     Graduados::destroy($id);
+    //     return response()->json(['success' => true]);
+    // }
 
     public function data()
     {

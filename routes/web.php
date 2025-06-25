@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/graduados', [GraduadosController::class, 'store'])->name('graduados.store');
     Route::get('/graduados/{id}/edit', [GraduadosController::class, 'edit'])->name('graduados.edit');
     Route::put('/graduados/{id}', [GraduadosController::class, 'update'])->name('graduados.update');
-    Route::delete('/graduados/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
+    //Route::delete('/graduados/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
     Route::get('/graduados/data', [GraduadosController::class, 'data']);
     Route::get('/graduados/form', [GraduadosController::class, 'createForm'])->name('graduados.form');
     Route::post('/graduados/store-full', [GraduadosController::class, 'storeFull'])->name('graduados.storeFull');
@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/carreras', [CarrerasController::class, 'store'])->name('carreras.store');
     Route::get('/carreras/data', [CarrerasController::class, 'data']);
     Route::get('/graduados/reporte', [GraduadosController::class, 'reporteGraduados'])->name('graduados.reporte');
+    Route::delete('/graduados-carreras/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
+
 });
 
 

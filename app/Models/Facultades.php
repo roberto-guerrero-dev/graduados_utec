@@ -11,7 +11,7 @@ class Facultades extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'codigo_facultad', 'nombre_facultad'
+        'codigo_facultad', 'nombre_facultad', 'activo'
     ];
 }
 

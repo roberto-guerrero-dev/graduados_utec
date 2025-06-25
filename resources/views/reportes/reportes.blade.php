@@ -84,7 +84,21 @@
         </div>
      </div>
 
+     <form id="formExportar" method="POST" action="" target="_blank">
+        @csrf
+        <input type="hidden" name="data" id="exportData">
+    </form>
+
+
      <div class="row">
+        <div class="col-12 mb-3">
+            <a href="#" id="btnExportarPDF" class="btn btn-danger btn-sm">
+                <i class="fa fa-file-pdf"></i> Exportar PDF
+            </a>
+            <a href="#" id="btnExportarExcel" class="btn btn-success btn-sm">
+                <i class="fa fa-file-excel"></i> Exportar Excel
+            </a>
+        </div>
         <div class="col-12">
             <div class="card shadow-sm">
          <div class="card-header bg-primary-custom text-white">
@@ -171,6 +185,27 @@
             setTimeout(() => tabla.ajax.reload(), 100);
         });
     });
+
+    $('#btnExportarPDF').on('click', function (e) {
+        e.preventDefault();
+
+        // Obtenemos los datos actuales del DataTable
+        const data = $('#tablaGraduadosCarreras').DataTable().rows().data().toArray();
+
+        // Enviamos como JSON
+        $('#exportData').val(JSON.stringify(data));
+        $('#formExportar').attr('action', '{{ route("graduados.exportar.pdf.directo") }}').submit();
+    });
+
+    $('#btnExportarExcel').on('click', function (e) {
+        e.preventDefault();
+
+        const data = $('#tablaGraduadosCarreras').DataTable().rows().data().toArray();
+
+        $('#exportData').val(JSON.stringify(data));
+        $('#formExportar').attr('action', '{{ route("graduados.exportar.excel.directo") }}').submit();
+    });
+
     // function cargarTabla() {
     //             $('#tablaGraduadosCarreras').DataTable({
     //                 processing: true,

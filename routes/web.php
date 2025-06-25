@@ -68,6 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/carreras/{id}', [CarrerasController::class, 'show'])->name('carreras.show');
     Route::put('/carreras/{id}', [CarrerasController::class, 'update'])->name('carreras.update');
     Route::post('/graduados-carreras/data', [GraduadosController::class, 'buscarGraduados'])->name('graduados.buscar');
+    Route::post('/graduados-carreras/exportar-pdf-directo', [GraduadosController::class, 'exportarPDFDirecto'])->name('graduados.exportar.pdf.directo');
+    Route::post('/graduados-carreras/exportar-excel-directo', [GraduadosController::class, 'exportarExcelDirecto'])->name('graduados.exportar.excel.directo');
 
 });
 

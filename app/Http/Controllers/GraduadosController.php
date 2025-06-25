@@ -11,6 +11,9 @@ use App\Models\Carreras;
 use App\Models\VGraduadosCarreras;
 use App\Models\Facultades;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\GraduadosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GraduadosController extends Controller
 {
@@ -52,6 +55,25 @@ class GraduadosController extends Controller
         $facultades = Facultades::all();
         $graduados = VGraduadosCarreras::all();
         return view('reportes.reportes', compact('carreras', 'facultades', 'graduados'));
+    }
+
+    public function exportarPDFDirecto(Request $request)
+    {
+        $datos = json_decode($request->input('data'));
+
+        $pdf = Pdf::loadView('reportes.reporte-pdf', [
+            'resultados' => $datos,
+            'titulo' => 'Reporte de Graduados',
+        ]);
+
+        return $pdf->download('reporte_graduados.pdf');
+    }
+
+    public function exportarExcelDirecto(Request $request)
+    {
+        $datos = json_decode($request->input('data'));
+
+        return Excel::download(new GraduadosExport($datos), 'reporte_graduados.xlsx');
     }
 
     public function storeFull(Request $request)

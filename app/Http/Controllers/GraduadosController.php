@@ -9,6 +9,7 @@ use App\Models\Correos;
 use App\Models\Telefonos;
 use App\Models\Carreras;
 use App\Models\VGraduadosCarreras;
+use App\Models\Facultades;
 
 class GraduadosController extends Controller
 {
@@ -29,6 +30,8 @@ class GraduadosController extends Controller
 
     public function reporteGraduados()
     {
+        $carreras = Carreras::all();
+        $facultades = Facultades::all();
         $graduados = VGraduadosCarreras::all();
         return view('reportes.reportes', compact('graduados'));
     }
@@ -41,7 +44,7 @@ class GraduadosController extends Controller
                 'nombres' => 'required|string',
                 'apellidos' => 'required|string',
                 'genero' => 'required|string|in:Masculino,Femenino',
-                'codigo_carrera' => 'required|string|exists:carreras,codigo_carrera',
+                'id_carrera' => 'required|int|exists:carreras,id_carrera',
                 'fecha_graduacion' => 'required|date',
                 'ciclo_graduacion' => 'required|string',
                 'correos' => 'required|array',
@@ -72,7 +75,7 @@ class GraduadosController extends Controller
 
             GraduadosCarreras::create([
                 'carnet_graduado' => $validated['carnet_graduado'],
-                'codigo_carrera' => $validated['codigo_carrera'],
+                'id_carrera' => $validated['id_carrera'],
                 'fecha_graduacion' => $validated['fecha_graduacion'],
                 'ciclo_graduacion' => $validated['ciclo_graduacion'],
             ]);

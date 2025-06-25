@@ -13,7 +13,12 @@ class FacultadesController extends Controller
     }
 
     public function store(Request $request) {
-        return response()->json(Facultades::create($request->all()));
+        $data = $request->all();
+        $data['activo'] = 1;
+
+        $facultad = Facultades::create($data);
+
+        return response()->json($facultad);
     }
 
     public function edit($id) {
@@ -26,8 +31,21 @@ class FacultadesController extends Controller
         return response()->json($facultad);
     }
 
-    public function destroy($id) {
-        return response()->json(Facultades::destroy($id));
+    public function destroy($id)
+    {
+        $facultad = Facultades::findOrFail($id);
+
+        if ($facultad) {
+            $facultad->activo = 0;
+            $facultad->save();
+            return response()->json(['success' => true, 'message' => 'Facultad desactivada correctamente.'], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Facultad no encontrada'], 404);
+        }
+    }
+
+    public function show($id) {
+        return response()->json(Facultades::findOrFail($id));
     }
 
     public function data()

@@ -25,18 +25,6 @@
                                 <input type="date" class="form-control form-control-sm" id="fecha_fin" name="fecha_fin">
                             </div>
 
-                            {{-- Filtro por Año de Graduación --}}
-                            <div class="col-md-3">
-                                <label for="anio_graduacion" class="form-label">Año de Graduación:</label>
-                                <select class="form-select form-select-sm" id="anio_graduacion" name="anio_graduacion">
-                                    <option value="">Seleccione un año</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    {{-- Agrega más años estáticos según sea necesario --}}
-                                </select>
-                            </div>
-
                             {{-- Filtro por Modalidad --}}
                             <div class="col-md-3">
                                 <label for="modalidad" class="form-label">Modalidad:</label>
@@ -45,18 +33,6 @@
                                     <option value="presencial">Presencial</option>
                                     <option value="virtual">Virtual</option>
                                     <option value="semipresencial">Semipresencial</option>
-                                </select>
-                            </div>
-
-                            {{-- Filtro por Ciclo de Graduación --}}
-                            <div class="col-md-3">
-                                <label for="ciclo_graduacion" class="form-label">Ciclo de Graduación:</label>
-                                <select class="form-select form-select-sm" id="ciclo_graduacion" name="ciclo_graduacion">
-                                    <option value="">Seleccione un ciclo</option>
-                                    <option value="1">Ciclo 1</option>
-                                    <option value="2">Ciclo 2</option>
-                                    <option value="3">Ciclo 3</option>
-                                    {{-- Agrega más ciclos estáticos si es necesario --}}
                                 </select>
                             </div>
 
@@ -84,53 +60,25 @@
          </div>
          <div class="card-body">
              <div class="table-responsive">
-                 <table class="table table-striped table-hover align-middle">
-                     <thead>
-                         <tr>
-                             <th scope="col">#</th>
-                             <th scope="col">Nombre Completo</th>
-                             <th scope="col">Carnet</th>
-                             <th scope="col">Carrera</th>
-                             <th scope="col">Fecha Graduación</th>
-                             <th scope="col">Año Graduación</th>
-                             <th scope="col">Modalidad</th>
-                             <th scope="col">Ciclo Graduación</th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                         <tr>
-                             <th scope="row">1</th>
-                             <td>Ejemplo Nombre 1 Ejemplo Apellido 1</td>
-                             <td>CARNET001</td>
-                             <td>Ingeniería de Sistemas</td>
-                             <td>20/05/2023</td>
-                             <td>2023</td>
-                             <td>Presencial</td>
-                             <td>2</td>
-                         </tr>
-                         <tr>
-                             <th scope="row">2</th>
-                             <td>Ejemplo Nombre 2 Ejemplo Apellido 2</td>
-                             <td>CARNET002</td>
-                             <td>Licenciatura en Administración de Empresas</td>
-                             <td>15/11/2022</td>
-                             <td>2022</td>
-                             <td>Virtual</td>
-                             <td>3</td>
-                         </tr>
-                         <tr>
-                             <th scope="row">3</th>
-                             <td>Ejemplo Nombre 3 Ejemplo Apellido 3</td>
-                             <td>CARNET003</td>
-                             <td>Arquitectura</td>
-                             <td>01/03/2023</td>
-                             <td>2023</td>
-                             <td>Semipresencial</td>
-                             <td>1</td>
-                         </tr>
-                         {{-- Agrega más filas de ejemplo estáticas si lo deseas --}}
-                     </tbody>
-                 </table>
+                 <table id="tablaGraduadosCarreras" class="table table-striped table-hover table-bordered"
+                        style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Carrera</th>
+                                <th>Facultad</th>
+                                <th>Modalidad</th>
+                                <th>Fecha Graduación</th>
+                                <th>Ciclo</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargarán mediante DataTables -->
+                        </tbody>
+                    </table>
              </div>
              {{-- Aquí podrías agregar una sección para la paginación si fuera necesario --}}
          </div>
@@ -139,3 +87,62 @@
      </div>
  </div>
  @endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        cargarTabla();
+    });
+    function cargarTabla() {
+                $('#tablaGraduadosCarreras').DataTable({
+                    processing: true,
+                    destroy: true,
+                    responsive: true,
+                    language: {
+                        url: '/assets/lang/es-ES.json'
+                    },
+                    ajax: '/graduados-carreras/data',
+                    columns: [{
+                            data: 'nombre'
+                        },
+                        {
+                            data: 'carrera'
+                        },
+                        {
+                            data: 'facultad'
+                        },
+                        {
+                            data: 'modalidad'
+                        },
+                        {
+                            data: 'fecha_graduacion'
+                        },
+                        {
+                            data: 'ciclo_graduacion',
+                            width: '100px'
+                        },
+                        {
+                            data: 'telefonos'
+                        },
+                        {
+                            data: 'correos'
+                        },
+                        {
+                            data: null,
+                            render: function(data, type, row) {
+                                return `
+                                <div class="btn-group">
+                                    <button class="btn btn-warning btn-sm" onclick="editarGraduado(${data.id})"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarGraduado(${data.id})"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                `;
+                            },
+                            orderable: false,
+                            searchable: false
+                        }
+                    ]
+                });
+
+            }
+</script>
+@endsection

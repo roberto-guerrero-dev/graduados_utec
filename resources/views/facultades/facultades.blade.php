@@ -75,8 +75,9 @@ $(document).ready(function() {
     // Guardar o actualizar
     $('#formFacultades').submit(function(e) {
         e.preventDefault();
-        let method = 'POST';
-        let url = '/facultades';
+        let id = $(this).attr('data-id');
+        let method = id ? 'PUT' : 'POST';
+        let url = id ? `/facultades/${id}` : '/facultades';
 
         $.ajax({
             url: url,
@@ -108,8 +109,8 @@ $(document).ready(function() {
                     render: function(data) {
                         return `
                         <div class="btn-group" role="group">
-                            <button class="btn btn-warning btn-sm" onclick="editarFacultad(${data.id})"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarFacultad(${data.id})"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-warning btn-sm" onclick="editarFacultad(${data.id_facultad})"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarFacultad(${data.id_facultad})"><i class="fa-solid fa-trash"></i></button>
                         </div>
                         `;
                     }
@@ -118,5 +119,39 @@ $(document).ready(function() {
         });
     }
 });
+
+function editarFacultad(id) {
+    $.ajax({
+        url: `/facultades/${id}`,
+        method: 'GET',
+        success: function(data) {
+            $('input[name="codigo_facultad"]').val(data.codigo_facultad);
+            $('input[name="nombre_facultad"]').val(data.nombre_facultad);
+            $('#formFacultades').attr('data-id', id);
+            $('#modalFacultades').modal('show');
+        },
+        error: function(err) {
+            alert('Error al cargar los datos de la facultad');
+        }
+    });
+}
+
+function eliminarFacultad(id) {
+    if (confirm('¿Estás seguro de eliminar esta facultad?')) {
+        $.ajax({
+            url: `/facultades/${id}`,
+            method: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function() {
+                location.reload(); // recargar tabla
+            },
+            error: function(err) {
+                alert('Error al eliminar la facultad');
+            }
+        });
+    }
+}
 </script>
 @endsection

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-06-2025 a las 14:31:04
+-- Tiempo de generación: 25-06-2025 a las 09:58:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -35,6 +35,10 @@ CREATE TABLE `cache` (
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RELACIONES PARA LA TABLA `cache`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +51,10 @@ CREATE TABLE `cache_locks` (
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RELACIONES PARA LA TABLA `cache_locks`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -55,19 +63,25 @@ CREATE TABLE `cache_locks` (
 
 CREATE TABLE `carreras` (
   `id_carrera` int(11) NOT NULL,
-  `codigo_carrera` varchar(20) NOT NULL,
+  `codigo_carrera` int(11) NOT NULL,
+  `id_facultad` int(11) NOT NULL,
   `nombre` varchar(200) NOT NULL,
   `modalidad` varchar(50) NOT NULL,
-  `codigo_facultad` varchar(20) NOT NULL
+  `activo` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `carreras`:
+--   `id_facultad`
+--       `facultades` -> `id_facultad`
+--
 
 --
 -- Volcado de datos para la tabla `carreras`
 --
 
-INSERT INTO `carreras` (`id_carrera`, `codigo_carrera`, `nombre`, `modalidad`, `codigo_facultad`) VALUES
-(4, '27', 'Técnico en Ingeniería de Software', 'Virtual', 'FICA'),
-(5, '15', 'Técnico en Administración de Empresas', 'Presencial', 'CE');
+INSERT INTO `carreras` (`id_carrera`, `codigo_carrera`, `id_facultad`, `nombre`, `modalidad`, `activo`) VALUES
+(1, 28, 2, 'Licenciatura en Ciencias Jurídicas', 'Presencial', b'0');
 
 -- --------------------------------------------------------
 
@@ -82,13 +96,17 @@ CREATE TABLE `correos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `correos`:
+--   `carnet_graduado`
+--       `graduados` -> `carnet_graduado`
+--
+
+--
 -- Volcado de datos para la tabla `correos`
 --
 
 INSERT INTO `correos` (`id_correo`, `carnet_graduado`, `correo`) VALUES
-(11, '12345', 'correo2@gmail.com'),
-(10, '12345', 'correo@gmail.com'),
-(9, '2717932022', 'asdf');
+(22, '2717932022', 'correo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -99,16 +117,20 @@ INSERT INTO `correos` (`id_correo`, `carnet_graduado`, `correo`) VALUES
 CREATE TABLE `facultades` (
   `id_facultad` int(11) NOT NULL,
   `codigo_facultad` varchar(20) NOT NULL,
-  `nombre_facultad` varchar(100) NOT NULL
+  `nombre_facultad` varchar(100) NOT NULL,
+  `activo` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `facultades`:
+--
 
 --
 -- Volcado de datos para la tabla `facultades`
 --
 
-INSERT INTO `facultades` (`id_facultad`, `codigo_facultad`, `nombre_facultad`) VALUES
-(5, 'FICA', 'Facultad de Informática y Ciencias Aplicadas'),
-(6, 'CE', 'Facultad de Ciencias Empresariales');
+INSERT INTO `facultades` (`id_facultad`, `codigo_facultad`, `nombre_facultad`, `activo`) VALUES
+(2, 'CE', 'Facultad de Ciencias Empresariales', b'0');
 
 -- --------------------------------------------------------
 
@@ -126,6 +148,10 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RELACIONES PARA LA TABLA `failed_jobs`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -142,12 +168,15 @@ CREATE TABLE `graduados` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `graduados`:
+--
+
+--
 -- Volcado de datos para la tabla `graduados`
 --
 
 INSERT INTO `graduados` (`id_graduado`, `carnet_graduado`, `nombres`, `apellidos`, `genero`, `activo`) VALUES
-(14, '2717932022', 'Roberto Carlos', 'Guerrero Vasquez', 'Masculino', b'1'),
-(15, '12345', 'Juan', 'Perez', 'Masculino', b'1');
+(19, '2717932022', 'Roberto Carlos', 'Guerrero Vasquez', 'Masculino', b'1');
 
 -- --------------------------------------------------------
 
@@ -158,18 +187,25 @@ INSERT INTO `graduados` (`id_graduado`, `carnet_graduado`, `nombres`, `apellidos
 CREATE TABLE `graduados_carreras` (
   `id_graduados_carreras` int(11) NOT NULL,
   `carnet_graduado` varchar(40) NOT NULL,
-  `codigo_carrera` varchar(20) NOT NULL,
+  `id_carrera` int(11) NOT NULL,
   `fecha_graduacion` date NOT NULL,
   `ciclo_graduacion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `graduados_carreras`:
+--   `carnet_graduado`
+--       `graduados` -> `carnet_graduado`
+--   `id_carrera`
+--       `carreras` -> `id_carrera`
+--
+
+--
 -- Volcado de datos para la tabla `graduados_carreras`
 --
 
-INSERT INTO `graduados_carreras` (`id_graduados_carreras`, `carnet_graduado`, `codigo_carrera`, `fecha_graduacion`, `ciclo_graduacion`) VALUES
-(4, '2717932022', '27', '2025-05-23', '02-2025'),
-(5, '12345', '15', '2025-05-24', '01-2026');
+INSERT INTO `graduados_carreras` (`id_graduados_carreras`, `carnet_graduado`, `id_carrera`, `fecha_graduacion`, `ciclo_graduacion`) VALUES
+(1, '2717932022', 1, '2025-06-25', '01-2025');
 
 -- --------------------------------------------------------
 
@@ -186,6 +222,10 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- RELACIONES PARA LA TABLA `jobs`:
+--
 
 -- --------------------------------------------------------
 
@@ -206,6 +246,10 @@ CREATE TABLE `job_batches` (
   `finished_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RELACIONES PARA LA TABLA `job_batches`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -219,13 +263,22 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- RELACIONES PARA LA TABLA `migrations`:
+--
+
+--
 -- Volcado de datos para la tabla `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '0001_01_01_000000_create_users_table', 1),
 (2, '0001_01_01_000001_create_cache_table', 1),
-(3, '0001_01_01_000002_create_jobs_table', 1);
+(3, '0001_01_01_000002_create_jobs_table', 1),
+(4, '2025_06_25_024051_add_deleted_at_to_graduados_carreras', 2),
+(5, '2025_06_25_025251_add_deleted_at_to_graduados_carreras', 3),
+(6, '2025_06_25_025359_add_deleted_at_to_graduados_carreras', 4),
+(7, '2025_06_25_025655_add_deleted_at_to_graduados_carreras', 5),
+(8, '2025_06_25_034545_remove_deleted_at_to_graduados_carreras', 6);
 
 -- --------------------------------------------------------
 
@@ -238,6 +291,10 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- RELACIONES PARA LA TABLA `password_reset_tokens`:
+--
 
 -- --------------------------------------------------------
 
@@ -255,13 +312,15 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- RELACIONES PARA LA TABLA `sessions`:
+--
+
+--
 -- Volcado de datos para la tabla `sessions`
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('aLsuaV8kT7e8YXs5IFOq4LGFmyew3oVb2rVOMPXs', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidUc2VFZvNVd4RU00SUhmNFFONVYwejVYMThsU3RjdlhFaDRWUGFQZiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC91c3VhcmlvcyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUwNTIwNzA0O319', 1750527621),
-('UkXm8DXvNS0PNvWeY6goo97YhlOliXKqcMKkUpdI', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidmVyNWxIR1lZSFlKVHFPbHl3NG4zS3Q4Ylh3SDhKclRNMlRlRHNOdSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NTA3NDM0MzQ7fX0=', 1750744344),
-('vrwGyJJ30bdVXpgnPbC4mlEZRFsam2LUduBFXRs4', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieFZDOXEwM0RpSHBIbXhwRTh5ejRNdnMxSjVzcENPNXd2b1JTdVBKWSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ncmFkdWFkb3MvcmVwb3J0ZSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUwMzkwODAyO319', 1750396916);
+('uSuCG8k1ciFDaalxy6MmGZpPGZFwRo121ao42och', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiQ2draDBXSkNmSWVhVHBZTGMzb0IyRHgzRjVPTEN5RG1ubHkwejJtYiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ncmFkdWFkb3MvZm9ybSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUwODE5ODE1O319', 1750837885);
 
 -- --------------------------------------------------------
 
@@ -276,13 +335,17 @@ CREATE TABLE `telefonos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `telefonos`:
+--   `carnet_graduado`
+--       `graduados` -> `carnet_graduado`
+--
+
+--
 -- Volcado de datos para la tabla `telefonos`
 --
 
 INSERT INTO `telefonos` (`id_telefono`, `carnet_graduado`, `telefono`) VALUES
-(11, '12345', '2222222'),
-(10, '12345', '23232323'),
-(9, '2717932022', 'asdf');
+(22, '2717932022', '78190901');
 
 -- --------------------------------------------------------
 
@@ -300,6 +363,10 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- RELACIONES PARA LA TABLA `users`:
+--
 
 --
 -- Volcado de datos para la tabla `users`
@@ -320,6 +387,8 @@ CREATE TABLE `v_graduados_carreras` (
 `id` int(11)
 ,`carnet_graduado` varchar(40)
 ,`nombre` varchar(101)
+,`genero` varchar(20)
+,`id_carrera` int(11)
 ,`carrera` varchar(200)
 ,`facultad` varchar(100)
 ,`modalidad` varchar(50)
@@ -336,7 +405,7 @@ CREATE TABLE `v_graduados_carreras` (
 --
 DROP TABLE IF EXISTS `v_graduados_carreras`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_graduados_carreras`  AS SELECT `gc`.`id_graduados_carreras` AS `id`, `g`.`carnet_graduado` AS `carnet_graduado`, concat(`g`.`nombres`,' ',`g`.`apellidos`) AS `nombre`, `c`.`nombre` AS `carrera`, `f`.`nombre_facultad` AS `facultad`, `c`.`modalidad` AS `modalidad`, `gc`.`fecha_graduacion` AS `fecha_graduacion`, `gc`.`ciclo_graduacion` AS `ciclo_graduacion`, group_concat(distinct `t`.`telefono` separator ', ') AS `telefonos`, group_concat(distinct `cr`.`correo` separator ', ') AS `correos` FROM (((((`graduados_carreras` `gc` join `graduados` `g` on(`gc`.`carnet_graduado` = `g`.`carnet_graduado`)) join `carreras` `c` on(`gc`.`codigo_carrera` = `c`.`codigo_carrera`)) join `facultades` `f` on(`c`.`codigo_facultad` = `f`.`codigo_facultad`)) left join `telefonos` `t` on(`g`.`carnet_graduado` = `t`.`carnet_graduado`)) left join `correos` `cr` on(`g`.`carnet_graduado` = `cr`.`carnet_graduado`)) GROUP BY `gc`.`id_graduados_carreras`, `g`.`carnet_graduado`, `g`.`nombres`, `g`.`apellidos`, `c`.`nombre`, `f`.`nombre_facultad`, `c`.`modalidad`, `gc`.`fecha_graduacion`, `gc`.`ciclo_graduacion` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_graduados_carreras`  AS SELECT `gc`.`id_graduados_carreras` AS `id`, `g`.`carnet_graduado` AS `carnet_graduado`, concat(`g`.`nombres`,' ',`g`.`apellidos`) AS `nombre`, `g`.`genero` AS `genero`, `c`.`id_carrera` AS `id_carrera`, `c`.`nombre` AS `carrera`, `f`.`nombre_facultad` AS `facultad`, `c`.`modalidad` AS `modalidad`, `gc`.`fecha_graduacion` AS `fecha_graduacion`, `gc`.`ciclo_graduacion` AS `ciclo_graduacion`, group_concat(distinct `t`.`telefono` separator ', ') AS `telefonos`, group_concat(distinct `cr`.`correo` separator ', ') AS `correos` FROM (((((`graduados_carreras` `gc` join `graduados` `g` on(`gc`.`carnet_graduado` = `g`.`carnet_graduado`)) join `carreras` `c` on(`gc`.`id_carrera` = `c`.`id_carrera`)) join `facultades` `f` on(`c`.`id_facultad` = `f`.`id_facultad`)) left join `telefonos` `t` on(`g`.`carnet_graduado` = `t`.`carnet_graduado`)) left join `correos` `cr` on(`g`.`carnet_graduado` = `cr`.`carnet_graduado`)) GROUP BY `gc`.`id_graduados_carreras`, `g`.`carnet_graduado`, `g`.`nombres`, `g`.`apellidos`, `g`.`genero`, `c`.`id_carrera`, `c`.`nombre`, `f`.`nombre_facultad`, `c`.`modalidad`, `gc`.`fecha_graduacion`, `gc`.`ciclo_graduacion` ;
 
 --
 -- Índices para tablas volcadas
@@ -359,8 +428,7 @@ ALTER TABLE `cache_locks`
 --
 ALTER TABLE `carreras`
   ADD PRIMARY KEY (`id_carrera`),
-  ADD UNIQUE KEY `codigo_carrera` (`codigo_carrera`),
-  ADD KEY `fk_facultades_carreras` (`codigo_facultad`);
+  ADD KEY `fk_facultades_carreras` (`id_facultad`);
 
 --
 -- Indices de la tabla `correos`
@@ -373,8 +441,7 @@ ALTER TABLE `correos`
 -- Indices de la tabla `facultades`
 --
 ALTER TABLE `facultades`
-  ADD PRIMARY KEY (`id_facultad`),
-  ADD UNIQUE KEY `codigo_facultad` (`codigo_facultad`);
+  ADD PRIMARY KEY (`id_facultad`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -396,7 +463,7 @@ ALTER TABLE `graduados`
 ALTER TABLE `graduados_carreras`
   ADD PRIMARY KEY (`id_graduados_carreras`),
   ADD KEY `fk_carnet_carrera` (`carnet_graduado`),
-  ADD KEY `fk_cod_carrera` (`codigo_carrera`);
+  ADD KEY `fk_id_carrera` (`id_carrera`);
 
 --
 -- Indices de la tabla `jobs`
@@ -453,19 +520,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `id_carrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_carrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `correos`
 --
 ALTER TABLE `correos`
-  MODIFY `id_correo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_correo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `facultades`
 --
 ALTER TABLE `facultades`
-  MODIFY `id_facultad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_facultad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -477,13 +544,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `graduados`
 --
 ALTER TABLE `graduados`
-  MODIFY `id_graduado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_graduado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `graduados_carreras`
 --
 ALTER TABLE `graduados_carreras`
-  MODIFY `id_graduados_carreras` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_graduados_carreras` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -495,13 +562,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos`
 --
 ALTER TABLE `telefonos`
-  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -517,7 +584,7 @@ ALTER TABLE `users`
 -- Filtros para la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  ADD CONSTRAINT `fk_facultades_carreras` FOREIGN KEY (`codigo_facultad`) REFERENCES `facultades` (`codigo_facultad`);
+  ADD CONSTRAINT `fk_facultades_carreras` FOREIGN KEY (`id_facultad`) REFERENCES `facultades` (`id_facultad`);
 
 --
 -- Filtros para la tabla `correos`
@@ -530,7 +597,7 @@ ALTER TABLE `correos`
 --
 ALTER TABLE `graduados_carreras`
   ADD CONSTRAINT `fk_carnet_carrera` FOREIGN KEY (`carnet_graduado`) REFERENCES `graduados` (`carnet_graduado`),
-  ADD CONSTRAINT `fk_cod_carrera` FOREIGN KEY (`codigo_carrera`) REFERENCES `carreras` (`codigo_carrera`);
+  ADD CONSTRAINT `fk_id_carrera` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id_carrera`);
 
 --
 -- Filtros para la tabla `telefonos`

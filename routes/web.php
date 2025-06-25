@@ -61,7 +61,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/graduados-carreras/{id}', [GraduadosController::class, 'destroy'])->name('graduados.destroy');
     Route::put('/graduados-carreras/{id}', [GraduadosController::class, 'update'])->name('graduados.update');
     Route::get('/graduados-carreras/{id}', [GraduadosController::class, 'show']);
-
+    Route::get('/facultades/{id}', [FacultadesController::class, 'show'])->name('facultades.show');
+    Route::put('/facultades/{id}', [FacultadesController::class, 'update'])->name('facultades.update');
+    Route::delete('/facultades/{id}', [FacultadesController::class, 'destroy'])->name('facultades.destroy');
+    Route::delete('/carreras/{id}', [CarrerasController::class, 'destroy'])->name('carreras.destroy');
+    Route::get('/carreras/{id}', [CarrerasController::class, 'show'])->name('carreras.show');
+    Route::put('/carreras/{id}', [CarrerasController::class, 'update'])->name('carreras.update');
 });
 
 

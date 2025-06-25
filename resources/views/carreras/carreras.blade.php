@@ -20,6 +20,7 @@
                             <th>Nombre Carrera</th>
                             <th>Modalidad</th>
                             <th>Facultad</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +45,7 @@
           <div class="row">
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Codigo</label>
-                <input class="form-control form-control-sm mb-2" name="codigo_carrera" placeholder="Codigo carrera">
+                <input type="number" class="form-control form-control-sm mb-2" name="codigo_carrera" placeholder="Codigo carrera">
             </div>
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Nombre</label>
@@ -58,10 +59,10 @@
             </div>
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Facultad</label>
-                <select name="codigo_facultad" class="form-select form-select-sm mb-2" required>
+                <select name="id_facultad" class="form-select form-select-sm mb-2" required>
                     <option value="">Seleccione facultad</option>   
                     @foreach($facultades as $facultad)
-                                <option value="{{ $facultad->codigo_facultad }}">{{ $facultad->nombre_facultad }}</option>
+                                <option value="{{ $facultad->id_facultad }}">{{ $facultad->nombre_facultad }}</option>
                             @endforeach
                 </select>
             </div>
@@ -90,8 +91,10 @@ $(document).ready(function() {
     // Guardar o actualizar
     $('#formCarreras').submit(function(e) {
         e.preventDefault();
-        let method = 'POST';
-        let url = '/carreras';
+        let id = $(this).attr('data-id');
+
+        let method = id ? 'PUT' : 'POST';
+        let url = id ? `/carreras/${id}` : '/carreras';
 
         $.ajax({
             url: url,
@@ -118,10 +121,59 @@ $(document).ready(function() {
                 { data: 'codigo_carrera' },
                 { data: 'nombre' },
                 { data: 'modalidad' },
-                { data: 'codigo_facultad' }
+                { data: 'id_facultad' },
+                {
+                    data: null,
+                    width: '80px',
+                    render: function(data) {
+                        return `
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-warning btn-sm" onclick="editarCarrera(${data.id_carrera})"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarCarrera(${data.id_carrera})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        `;
+                    }
+                }
             ]
         });
     }
 });
+
+function editarCarrera(id) {
+    $.ajax({
+        url: `/carreras/${id}`,
+        method: 'GET',
+        success: function(data) {
+            $('#modalLabel').text('Editar Carrera');
+            $('#formCarreras').attr('data-id', id);
+            $('input[name="codigo_carrera"]').val(data.codigo_carrera);
+            $('input[name="nombre"]').val(data.nombre);
+            $('input[name="modalidad"]').val(data.modalidad);
+            $('select[name="id_facultad"]').val(data.id_facultad);
+            $('#modalCarreras').modal('show');
+        },
+        error: function(err) {
+            alert('Error al cargar los datos de la carrera');
+        }
+    });
+}
+
+function eliminarCarrera(id) {
+    if (confirm('¿Estás seguro de eliminar esta carrera?')) {
+        $.ajax({
+            url: `/carreras/${id}`,
+            method: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(res) {
+                location.reload(); // recargar tabla
+            },
+            error: function(err) {
+                alert('Error al eliminar la carrera');
+            }
+        });
+    }
+}
 </script>
 @endsection

@@ -11,6 +11,6 @@ class Carreras extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'codigo_carrera', 'nombre', 'modalidad', 'codigo_facultad', 'activo'
+        'codigo_carrera', 'id_facultad', 'nombre', 'modalidad', 'activo'
     ];
 }

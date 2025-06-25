@@ -99,10 +99,10 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>Carrera</label>
-                                <select name="codigo_carrera" class="form-select form-select-sm">
+                                <select name="id_carrera" class="form-select form-select-sm">
                                     <option value="">Seleccione carrera</option>
                                     @foreach ($carreras as $carrera)
-                                        <option value="{{ $carrera->codigo_carrera }}">{{ $carrera->nombre }}</option>
+                                        <option value="{{ $carrera->id_carrera }}">{{ $carrera->nombre }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -138,7 +138,7 @@
                 theme: 'bootstrap-5',
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                     'style',
-                dropdownParent: $('#graduadoModal'),
+                dropdownParent: $('#graduadoModal .modal-body'),
                 tags: true,
                 tokenSeparators: [',', ' '],
                 placeholder: 'Seleccione opciones',
@@ -326,7 +326,7 @@
                 $('[name="nombres"]').val(data.nombres);
                 $('[name="apellidos"]').val(data.apellidos);
                 $('[name="genero"]').val(data.genero);
-                $('[name="codigo_carrera"]').val(data.codigo_carrera);
+                $('[name="id_carrera"]').val(data.id_carrera);
                 $('[name="fecha_graduacion"]').val(data.fecha_graduacion);
                 $('[name="ciclo_graduacion"]').val(data.ciclo_graduacion);
 

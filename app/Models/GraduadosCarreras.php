@@ -12,6 +12,6 @@ class GraduadosCarreras extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'carnet_graduado', 'codigo_carrera', 'fecha_graduacion', 'ciclo_graduacion'
+        'carnet_graduado', 'id_carrera', 'fecha_graduacion', 'ciclo_graduacion'
     ];
 }

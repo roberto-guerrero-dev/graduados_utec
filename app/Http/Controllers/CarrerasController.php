@@ -15,7 +15,10 @@ class CarrerasController extends Controller
     }
 
     public function store(Request $request) {
-        return response()->json(Carreras::create($request->all()));
+        $data = $request->all();
+        $data['activo'] = 1; // Asumimos que la carrera está activa
+        $carrera = Carreras::create($data);
+        return response()->json($carrera);
     }
 
     public function edit($id) {
@@ -25,11 +28,22 @@ class CarrerasController extends Controller
     public function update(Request $request, $id) {
         $carreras = Carreras::findOrFail($id);
         $carreras->update($request->all());
-        return response()->json($facultad);
+        return response()->json($carreras);
     }
 
     public function destroy($id) {
-        return response()->json(Carreras::destroy($id));
+        $carrera = Carreras::findOrFail($id);
+        if ($carrera) {
+            $carrera->activo = 0; // Desactivamos la carrera en lugar de eliminarla
+            $carrera->save();
+            return response()->json(['success' => true, 'message' => 'Carrera desactivada correctamente.'], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Carrera no encontrada'], 404);
+        }
+    }
+
+    public function show($id) {
+        return response()->json(Carreras::findOrFail($id));
     }
 
     public function data()

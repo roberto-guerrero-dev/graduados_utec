@@ -87,6 +87,8 @@ class GraduadosController extends Controller
         $sheet->setCellValue('E1', 'Modalidad');
         $sheet->setCellValue('F1', 'Fecha Graduación');
         $sheet->setCellValue('G1', 'Ciclo');
+        $sheet->setCellValue('H1', 'Teléfono');
+        $sheet->setCellValue('I1', 'Correo');
         
         // Estilo para encabezados
         $headerStyle = [
@@ -107,7 +109,7 @@ class GraduadosController extends Controller
                 ]
             ]
         ];
-        $sheet->getStyle('A1:G1')->applyFromArray($headerStyle);
+        $sheet->getStyle('A1:I1')->applyFromArray($headerStyle);
         
         // Llenar datos
         $row = 2;
@@ -119,11 +121,13 @@ class GraduadosController extends Controller
             $sheet->setCellValue('E' . $row, $item->modalidad);
             $sheet->setCellValue('F' . $row, $item->fecha_graduacion);
             $sheet->setCellValue('G' . $row, $item->ciclo_graduacion);
+            $sheet->setCellValue('H' . $row, $item->telefonos);
+            $sheet->setCellValue('I' . $row, $item->correos);
             $row++;
         }
         
         // Autoajustar columnas
-        foreach (range('A', 'G') as $column) {
+        foreach (range('A', 'I') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
         
@@ -199,7 +203,7 @@ class GraduadosController extends Controller
                 'nombres' => 'required|string',
                 'apellidos' => 'required|string',
                 'genero' => 'required|string',
-                'codigo_carrera' => 'required|string',
+                'id_carrera' => 'required|int',
                 'fecha_graduacion' => 'required|date',
                 'ciclo_graduacion' => 'required|string',
                 'correos' => 'required|array',
@@ -216,7 +220,7 @@ class GraduadosController extends Controller
             ]);
 
             $graduadoCarrera->update([
-                'codigo_carrera' => $validated['codigo_carrera'],
+                'id_carrera' => $validated['id_carrera'],
                 'fecha_graduacion' => $validated['fecha_graduacion'],
                 'ciclo_graduacion' => $validated['ciclo_graduacion'],
             ]);

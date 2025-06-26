@@ -29,7 +29,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ public_path('img/logo-institucional-utec.jpeg') }}" class="logo" alt="Logo"><br>
+        <img src="{{ public_path('img/logo-institucional-utec.jpeg') }}" style="width: 40%; height: auto;" alt="Logo"><br>
         <h2>{{ $titulo }}</h2>
     </div>
 
@@ -43,6 +43,8 @@
                 <th>Modalidad</th>
                 <th>Fecha</th>
                 <th>Ciclo</th>
+                <th>Teléfonos</th>
+                <th>Correos</th>
             </tr>
         </thead>
         <tbody>
@@ -55,6 +57,8 @@
                     <td>{{ $r->modalidad }}</td>
                     <td>{{ $r->fecha_graduacion }}</td>
                     <td>{{ $r->ciclo_graduacion }}</td>
+                    <td>{{ $r->telefonos }}</td>
+                    <td>{{ $r->correos }}</td>
                 </tr>
             @endforeach
         </tbody>

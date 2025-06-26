@@ -13,7 +13,9 @@ use App\Models\Facultades;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\GraduadosExport;
-use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GraduadosController extends Controller
 {
@@ -72,8 +74,72 @@ class GraduadosController extends Controller
     public function exportarExcelDirecto(Request $request)
     {
         $datos = json_decode($request->input('data'));
-
-        return Excel::download(new GraduadosExport($datos), 'reporte_graduados.xlsx');
+        
+        // Crear nuevo documento de Excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        // Encabezados
+        $sheet->setCellValue('A1', 'Nombre');
+        $sheet->setCellValue('B1', 'Genero');
+        $sheet->setCellValue('C1', 'Carrera');
+        $sheet->setCellValue('D1', 'Facultad');
+        $sheet->setCellValue('E1', 'Modalidad');
+        $sheet->setCellValue('F1', 'Fecha Graduación');
+        $sheet->setCellValue('G1', 'Ciclo');
+        
+        // Estilo para encabezados
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF']
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '5E0022']
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
+                ]
+            ]
+        ];
+        $sheet->getStyle('A1:G1')->applyFromArray($headerStyle);
+        
+        // Llenar datos
+        $row = 2;
+        foreach ($datos as $item) {
+            $sheet->setCellValue('A' . $row, $item->nombre);
+            $sheet->setCellValue('B' . $row, $item->genero);
+            $sheet->setCellValue('C' . $row, $item->carrera);
+            $sheet->setCellValue('D' . $row, $item->facultad);
+            $sheet->setCellValue('E' . $row, $item->modalidad);
+            $sheet->setCellValue('F' . $row, $item->fecha_graduacion);
+            $sheet->setCellValue('G' . $row, $item->ciclo_graduacion);
+            $row++;
+        }
+        
+        // Autoajustar columnas
+        foreach (range('A', 'G') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+        
+        // Crear respuesta
+        $writer = new Xlsx($spreadsheet);
+        
+        return new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="reporte_graduados.xlsx"'
+            ]
+        );
     }
 
     public function storeFull(Request $request)

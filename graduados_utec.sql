@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2025 a las 01:41:21
+-- Tiempo de generación: 26-06-2025 a las 10:31:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -52,6 +52,16 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('laravel_cache_as|127.0.0.1', 'i:1;', 1750918594),
+('laravel_cache_as|127.0.0.1:timer', 'i:1750918594;', 1750918594),
+('laravel_cache_guerrerov.robertocarlos00@gmail.|127.0.0.1', 'i:2;', 1750918342),
+('laravel_cache_guerrerov.robertocarlos00@gmail.|127.0.0.1:timer', 'i:1750918342;', 1750918342);
 
 -- --------------------------------------------------------
 
@@ -106,8 +116,12 @@ CREATE TABLE `correos` (
 
 INSERT INTO `correos` (`id_correo`, `carnet_graduado`, `correo`) VALUES
 (25, '2121212121', 'pablop@gmail.com'),
-(23, '2525252525', 'jorge@gmail.com'),
+(36, '2121212127', 'correo@gmail.com'),
+(35, '2323232322', 'ejemplo0101@gmail.com'),
+(31, '2525252525', 'jorge2@gmail.com'),
+(32, '2525252525', 'jorge@gmail.com'),
 (22, '2717932022', 'correo@gmail.com'),
+(26, '2929292929', 'maria@gmail.com'),
 (24, '7878787878', 'josegonz@gmail.com');
 
 -- --------------------------------------------------------
@@ -129,7 +143,9 @@ CREATE TABLE `facultades` (
 
 INSERT INTO `facultades` (`id_facultad`, `codigo_facultad`, `nombre_facultad`, `activo`) VALUES
 (2, 'CE', 'Facultad de Ciencias Empresariales', b'0'),
-(3, 'FICA', 'Facultad de Informática y Ciencias Aplicadas', b'1');
+(3, 'FICA', 'Facultad de Informática y Ciencias Aplicadas', b'0'),
+(4, 'DER', 'Facultad de Derecho', b'1'),
+(5, 'CSLS', 'Facultad de Ciencias Sociales', b'0');
 
 -- --------------------------------------------------------
 
@@ -170,7 +186,10 @@ INSERT INTO `graduados` (`id_graduado`, `carnet_graduado`, `nombres`, `apellidos
 (19, '2717932022', 'Roberto Carlos', 'Guerrero Vasquez', 'Masculino', b'1'),
 (20, '2525252525', 'Jorge', 'Perez', 'Masculino', b'1'),
 (21, '7878787878', 'José', 'Gonzales', 'Masculino', b'1'),
-(22, '2121212121', 'Pablo', 'Perez', 'Masculino', b'1');
+(22, '2121212121', 'Pablo', 'Perez', 'Masculino', b'1'),
+(23, '2929292929', 'Maria', 'Flores', 'Femenino', b'1'),
+(24, '2121212127', 'asdf', 'adssdf', 'Masculino', b'0'),
+(25, '2323232322', 'ejemplo0101', 'ejemplo0101', 'Masculino', b'1');
 
 -- --------------------------------------------------------
 
@@ -194,7 +213,10 @@ INSERT INTO `graduados_carreras` (`id_graduados_carreras`, `carnet_graduado`, `i
 (1, '2717932022', 1, '2025-06-25', '01-2025'),
 (2, '2525252525', 1, '2024-01-18', '01-2024'),
 (3, '7878787878', 1, '2022-11-21', '02-2022'),
-(4, '2121212121', 2, '2024-07-16', '01-2024');
+(4, '2121212121', 2, '2024-07-16', '01-2024'),
+(5, '2929292929', 2, '2024-01-01', '01-2024'),
+(6, '2121212127', 2, '2025-06-26', '01-2025'),
+(7, '2323232322', 1, '2025-06-26', '01-2025');
 
 -- --------------------------------------------------------
 
@@ -289,7 +311,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('f7uYKOvGK46uF52fWHwltOgGWhh0T3bYv0NJDO4k', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieWxqTlM4bGV5d1I5WWZ6SWZnb3hNdGp6V2hKU2xmRWUwTXpIRk81bCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ncmFkdWFkb3MvcmVwb3J0ZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUwODgxODEzO319', 1750893581);
+('Yse0Sh3Eba3VngItKvNa0V5Uz6PNj38LgYt4QQN3', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidDBSUXFidlNBdFRXajdRaThzQkc1ZnlGaXdrbzhiMzExY0hGTzhMcyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fX0=', 1750926600);
 
 -- --------------------------------------------------------
 
@@ -309,8 +331,11 @@ CREATE TABLE `telefonos` (
 
 INSERT INTO `telefonos` (`id_telefono`, `carnet_graduado`, `telefono`) VALUES
 (25, '2121212121', '79797979'),
-(23, '2525252525', '71717171'),
+(33, '2121212127', '76767676'),
+(32, '2323232322', '22222222'),
+(29, '2525252525', '71717171'),
 (22, '2717932022', '78190901'),
+(26, '2929292929', '71717171'),
 (24, '7878787878', '71727374');
 
 -- --------------------------------------------------------
@@ -336,7 +361,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Roberto Carlos Guerrero Vasquez', 'guerrerov.robertocarlos00@gmail.com', NULL, '$2y$12$5xbtxXbltYXDcwIv3HIF2./hrfezIDTrT481f2GEOYkc8TXTlfubG', NULL, '2025-05-07 11:28:25', '2025-06-05 10:05:13'),
-(2, 'Ejemplo 1', 'robguerrero40@gmail.com', NULL, '$2y$12$oloZUuktLl5UsQMPQuSmYOIz2GsEwRdXGWrp9TljbKQ4HX36zf/uC', NULL, '2025-05-08 13:32:01', '2025-05-24 10:07:25'),
 (3, 'ejemplo 2', 'ejemplo@gmail.com', NULL, '$2y$12$YqYupSWCwHoOEP8NUMRR5e/r9n8EQFhdwc7w9HDRDzOzCZcOtMCCi', NULL, '2025-05-09 13:35:22', '2025-05-24 10:07:32');
 
 -- --------------------------------------------------------
@@ -488,13 +512,13 @@ ALTER TABLE `carreras`
 -- AUTO_INCREMENT de la tabla `correos`
 --
 ALTER TABLE `correos`
-  MODIFY `id_correo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_correo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `facultades`
 --
 ALTER TABLE `facultades`
-  MODIFY `id_facultad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_facultad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -506,13 +530,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `graduados`
 --
 ALTER TABLE `graduados`
-  MODIFY `id_graduado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_graduado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `graduados_carreras`
 --
 ALTER TABLE `graduados_carreras`
-  MODIFY `id_graduados_carreras` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_graduados_carreras` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -530,13 +554,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `telefonos`
 --
 ALTER TABLE `telefonos`
-  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

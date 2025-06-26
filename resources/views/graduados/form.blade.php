@@ -134,16 +134,21 @@
 
             cargarTabla(); // Cargar la tabla al inicio
 
-            $('.correos-select, .telefonos-select').select2({
+            // Configuración común para select2
+            const select2Options = {
                 theme: 'bootstrap-5',
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
-                    'style',
+                width: '100%',
                 dropdownParent: $('#graduadoModal .modal-body'),
                 tags: true,
                 tokenSeparators: [',', ' '],
-                placeholder: 'Seleccione opciones',
-                width: '100%'
-            });
+                placeholder: 'Seleccione opciones'
+            };
+
+            // Inicializar select2 para correos
+            $('.correos-select').select2(select2Options);
+
+            // Inicializar select2 para teléfonos
+            $('.telefonos-select').select2(select2Options);
 
             $('#formGraduadoCarrera').submit(function(e) {
                 e.preventDefault();
@@ -217,7 +222,7 @@
                     },
                     error: function(response) {
                         console.log(response);
-                        alert('Ocurrió un error. Verifica los datos.');
+                        alert('Ocurrió un error. Verifica los datos. ' + response.responseText);
                     }
                 });
             });
@@ -300,23 +305,40 @@
         });
 
         function eliminarGraduado(id) {
-            if (confirm('¿Estás seguro de eliminar este registro?')) {
+            customSwal.showConfirm('¿Estás seguro de eliminar el graduado?', '', '', 'Eliminar', 'bg-primary-custom', 'Cancelar', 'bg-secondary', '', function() {
                 $.ajax({
-                    url: '/graduados-carreras/' + id,
+                    url: `/graduados-carreras/${id}`,
                     method: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        alert(response.message);
+                        customSwal.showAlert(response.message, '', '', 'Ok', 'bg-primary-custom', 'success');
                         $('#tablaGraduadosCarreras').DataTable().ajax.reload();
                     },
                     error: function(err) {
-                        alert('Error al eliminar');
-                        console.log(err);
+                        customSwal.showAlert('Error al eliminar el graduado', err.responseText, '', 'Ok',
+                            'bg-primary-custom', 'error');
                     }
                 });
-            }
+            });
+            // if (confirm('¿Estás seguro de eliminar este registro?')) {
+            //     $.ajax({
+            //         url: '/graduados-carreras/' + id,
+            //         method: 'DELETE',
+            //         data: {
+            //             _token: '{{ csrf_token() }}'
+            //         },
+            //         success: function(response) {
+            //             alert(response.message);
+            //             $('#tablaGraduadosCarreras').DataTable().ajax.reload();
+            //         },
+            //         error: function(err) {
+            //             alert('Error al eliminar');
+            //             console.log(err);
+            //         }
+            //     });
+            // }
         }
 
         function editarGraduado(id) {
@@ -356,11 +378,22 @@
             });
         }
 
-        $('#graduadoModal').on('hidden.bs.modal', function() {
-            $('#formGraduadoCarrera')[0].reset();
-            $('.correos-select, .telefonos-select').val(null).trigger('change');
-            $('#formGraduadoCarrera').removeAttr('data-id');
+        $('#graduadoModal').on('hide.bs.modal', function() {
+            const $form = $('#formGraduadoCarrera');
+
+            $form[0].reset(); // limpia inputs, pero no select2
+
+            // Limpia todos los select2 múltiple
+            $form.find('.correos-select, .telefonos-select').each(function() {
+                $(this).val(null).trigger('change');
+            });
+            let correosSelect = $('.correos-select');
+            correosSelect.empty();
+            let telefonosSelect = $('.telefonos-select');
+            telefonosSelect.empty();
+            $form.removeAttr('data-id');
             $('[name="carnet_graduado"]').prop('disabled', false); // Habilitar campo carnet
+            $('#ciclo').removeClass('is-valid is-invalid'); // Limpiar validación del ciclo
         });
 
         const cicloRegex = oRegEx.cicloRegEx();

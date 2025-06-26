@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,9 @@
     <link href="{{ asset('lib/select2/select2-4.1.0-rc.0/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/select2-bootstrap-5-theme-1.3.0/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/fontawesome/fontawesome-free-6.7.2-web/css/all.min.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo-utec.png') }}">
 </head>
+
 <body>
     <style>
         :root {
@@ -32,47 +35,64 @@
 
         /* Estilo para los enlaces de paginación (botones "siguiente", "anterior", números) */
         .page-link {
-            color: #ffffff; /* Color del texto del enlace (por ejemplo, azul de Bootstrap) */
-            background-color: #5E0022 !important; /* Color de fondo normal */
-            border: 1px solid #7f2143 !important; /* Borde normal */
+            color: #ffffff;
+            /* Color del texto del enlace (por ejemplo, azul de Bootstrap) */
+            background-color: #5E0022 !important;
+            /* Color de fondo normal */
+            border: 1px solid #7f2143 !important;
+            /* Borde normal */
         }
 
         /* Estilo para los enlaces de paginación al pasar el ratón (hover) */
         .page-link:hover {
-            color: #ffffff !important; /* Color del texto al pasar el ratón */
-            background-color: #5E0022 !important; /* Color de fondo al pasar el ratón (un azul más oscuro) */
-            border-color: #7f2143 !important; /* Color del borde al pasar el ratón */
+            color: #ffffff !important;
+            /* Color del texto al pasar el ratón */
+            background-color: #5E0022 !important;
+            /* Color de fondo al pasar el ratón (un azul más oscuro) */
+            border-color: #7f2143 !important;
+            /* Color del borde al pasar el ratón */
         }
 
         /* Estilo para el botón de paginación activo (la página actual) */
         /* DataTables usa .paginate_button.active > .page-link para el botón activo con Bootstrap */
-        .paginate_button.active > .page-link {
-            background-color: #5E0022 !important; /* Color de fondo para el botón activo (por ejemplo, verde) */
-            border-color: #7f2143 !important; /* Color del borde para el botón activo */
-            color: #ffffff !important; /* Color del texto para el botón activo */
+        .paginate_button.active>.page-link {
+            background-color: #5E0022 !important;
+            /* Color de fondo para el botón activo (por ejemplo, verde) */
+            border-color: #7f2143 !important;
+            /* Color del borde para el botón activo */
+            color: #ffffff !important;
+            /* Color del texto para el botón activo */
         }
 
         /* Opcional: Si necesitas un estilo específico para el estado 'focus' */
         .page-link:focus {
-            box-shadow: 0 0 0 0.25rem #7f2143 !important; /* Sombra al enfocar, ajusta al color que quieras */
+            box-shadow: 0 0 0 0.25rem #7f2143 !important;
+            /* Sombra al enfocar, ajusta al color que quieras */
         }
 
         /* Estilo para los botones de paginación deshabilitados (Anterior/Siguiente cuando no hay más páginas) */
         .page-item.disabled .page-link {
-            color: #ffffff !important; /* Color del texto a blanco */
-            background-color: #7f2143 !important; /* Un gris más oscuro para el fondo, o el color que prefieras */
-            border-color: #7f2143 !important; /* Color del borde igual al fondo */
-            opacity: 0.9; /* Puedes ajustar la opacidad si quieres que se vean ligeramente atenuados */
+            color: #ffffff !important;
+            /* Color del texto a blanco */
+            background-color: #7f2143 !important;
+            /* Un gris más oscuro para el fondo, o el color que prefieras */
+            border-color: #7f2143 !important;
+            /* Color del borde igual al fondo */
+            opacity: 0.9;
+            /* Puedes ajustar la opacidad si quieres que se vean ligeramente atenuados */
         }
 
         .bg-primary-custom {
             background-color: var(--bg-primary-custom) !important;
             color: white !important;
         }
-        html, body {
+
+        html,
+        body {
             margin: 0;
             padding: 0;
         }
+
         #main-container {
             min-height: 100dvh;
             display: grid;
@@ -81,17 +101,20 @@
             transition: all 0.5s ease-in-out;
             word-wrap: break-word;
         }
+
         #main-container.adjusted {
             margin-left: 60px;
         }
+
         header.topbar {
-            background-color:#f5f5f5;
+            background-color: #f5f5f5;
             color: white;
             padding: 15px 20px;
             display: flex;
             justify-content: flex-end;
             box-shadow: 0 2px 10px #a5a5a5;
         }
+
         footer {
             background-color: #f9f9f9;
             color: #a5a5a5;
@@ -99,10 +122,12 @@
             padding: 10px 20px;
             border-top: 1px solid #e5e5e5;
         }
+
         main {
             transition: all 0.5s ease-in-out;
             padding: 10px 20px;
         }
+
         /* body {
             background: linear-gradient(45deg,rgb(184, 129, 149), #bf0046);
         } */
@@ -116,6 +141,7 @@
             transition: margin-left 0.5s ease-in-out;
             color: #5E0022;
         }
+
         #sidebar {
             position: fixed;
             top: 10;
@@ -126,6 +152,7 @@
             color: white;
             transition: width 0.5s ease-in-out;
         }
+
         #sidebar ul {
             list-style: none;
             padding: 0;
@@ -133,6 +160,7 @@
             display: flex;
             flex-direction: column;
         }
+
         #sidebar ul li a {
             padding: 10px 20px;
             display: grid;
@@ -142,22 +170,27 @@
             text-decoration: none;
             opacity: 1;
         }
+
         .option_text {
             opacity: 1;
             transition: opacity 0.5s ease-in-out;
         }
+
         #sidebar ul li a:hover {
             background-color: #8f0738;
         }
+
         #sidebar ul li a.active {
             background-color: #8f0738;
             border-left: 3px #fff solid;
         }
+
         #logo-utec {
             max-width: 100px;
             opacity: 1;
             transition: opacity 0.5s ease-in-out;
         }
+
         .no_redirect_element {
             display: flex;
             justify-content: center;
@@ -165,68 +198,85 @@
             padding: 10px 0;
             height: var(--height-li-img);
         }
+
         #sidebar.option_text.hide_element {
             grid-template-columns: 40px 0fr;
         }
+
         .option_text.hide_element {
             opacity: 0;
         }
+
         #logo-utec.hide_element {
             opacity: 0;
         }
+
         #sidebar.sidebar_shrink {
             width: 60px;
         }
-        .dropdown-menu-sm .dropdown-item {
-            padding: 5px; /* Ajusta el espaciado */
-            font-size: 14px;     /* Coincide con btn-sm */
-            margin: 0; /* Elimina el margen */
-        }
-        .dropdown-menu{
-            padding: 0;
-            margin: 0;
+
+        /* Estilo personalizado del menú desplegable */
+        .custom-dropdown-menu {
+            font-size: 0.875rem;
+            /* Tamaño "sm" */
+            padding: 0.25rem 0.5rem;
+            min-width: 8rem;
         }
 
+        /* Evita color azul al hacer clic */
+        .custom-dropdown-menu .dropdown-item:active {
+            background-color: #f0f0f0 !important;
+            /* Fondo claro en clic */
+            color: #212529 !important;
+            /* Texto negro */
+        }
     </style>
     <aside id="sidebar" class="">
-            <ul>
-                <li class="no_redirect_element">
-                    <img src="{{ asset('img/logo-utec.png') }}" alt="Logo UTEC" id="logo-utec" class="">
-                </li>
-                <li><a href="{{ url('/home') }}" class="{{ request()->is('home') ? 'active' : '' }}">
-                    <i class="fa-solid fa-house"></i>  <span class="option_text">Inicio</span></a></li>
-                <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados/form') ? 'active' : '' }}">
-                <i class="fa-solid fa-user-graduate"></i>  <span class="option_text">Graduados</span></a></li>
-                <li><a href="{{ url('/facultades') }}" class="{{ request()->is('facultades') ? 'active' : '' }}">
-                <i class="fas fa-building-columns"></i>  <span class="option_text">Facultades</span></a></li>
-                <li><a href="{{ url('/carreras') }}" class="{{ request()->is('carreras') ? 'active' : '' }}">
-                <i class="fas fa-book-open"></i>  <span class="option_text">Carreras</span></a></li>
-                <li><a href="{{ url('/graduados/reporte') }}" class="{{ request()->is('graduados/reporte') ? 'active' : '' }}">
-                <i class="fas fa-file-lines"></i>  <span class="option_text">Reportes</span></a></li>
-                <li><a href="{{ url('/usuarios') }}" class="{{ request()->is('usuarios') ? 'active' : '' }}">
-                <i class="fas fa-users"></i>  <span class="option_text">Usuarios</span></a></li>
-            </ul>
-        </aside>
-<div class="hamburger" id="toggleSidebar"><i id="toggle" class="fa-solid fa-xmark"></i></div>
+        <ul>
+            <li class="no_redirect_element">
+                <img src="{{ asset('img/logo-utec.png') }}" alt="Logo UTEC" id="logo-utec" class="">
+            </li>
+            <li><a href="{{ url('/home') }}" class="{{ request()->is('home') ? 'active' : '' }}">
+                    <i class="fa-solid fa-house"></i> <span class="option_text">Inicio</span></a></li>
+            <li><a href="{{ url('/graduados/form') }}" class="{{ request()->is('graduados/form') ? 'active' : '' }}">
+                    <i class="fa-solid fa-user-graduate"></i> <span class="option_text">Graduados</span></a></li>
+            <li><a href="{{ url('/facultades') }}" class="{{ request()->is('facultades') ? 'active' : '' }}">
+                    <i class="fas fa-building-columns"></i> <span class="option_text">Facultades</span></a></li>
+            <li><a href="{{ url('/carreras') }}" class="{{ request()->is('carreras') ? 'active' : '' }}">
+                    <i class="fas fa-book-open"></i> <span class="option_text">Carreras</span></a></li>
+            <li><a href="{{ url('/graduados/reporte') }}"
+                    class="{{ request()->is('graduados/reporte') ? 'active' : '' }}">
+                    <i class="fas fa-file-lines"></i> <span class="option_text">Reportes</span></a></li>
+            <li><a href="{{ url('/usuarios') }}" class="{{ request()->is('usuarios') ? 'active' : '' }}">
+                    <i class="fas fa-users"></i> <span class="option_text">Usuarios</span></a></li>
+        </ul>
+    </aside>
+    <div class="hamburger" id="toggleSidebar"><i id="toggle" class="fa-solid fa-xmark"></i></div>
     <div id="main-container" class="">
         <header class="topbar">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-  @csrf
-</form>
+                @csrf
+            </form>
 
             <!-- Dropdown -->
             <div class="dropdown">
-            <button class="btn bg-primary-custom btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user"></i> {{ strtoupper(Auth::user()->name) }}
-            </button>
-            <ul class="dropdown-menu dropdown-menu-sm w-100" aria-labelledby="userDropdown">
-                <li>
-                <a class="dropdown-item" href="#"
-         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-         Cerrar sesión
-      </a>
-                </li>
-            </ul>
+                <button class="btn bg-primary-custom btn-sm dropdown-toggle" type="button" id="userDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i> {{ strtoupper(Auth::user()->name) }}
+                </button>
+                <ul class="dropdown-menu custom-dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="dropdown-item" href="#"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Cerrar sesión
+
+                                <i class="fa-solid fa-right-from-bracket ms-1"></i>
+                            </a>
+                            
+                        </div>
+                    </li>
+                </ul>
             </div>
 
         </header>
@@ -236,7 +286,7 @@
         </main>
 
         <footer>
-                <p>&copy; {{ date('Y') }} Mi Aplicación. Todos los derechos reservados.</p>
+            <p>&copy; {{ date('Y') }} - Desarrollado por Mario García, Adan Zaamir y Roberto Guerrero.</p>
         </footer>
     </div>
 
@@ -262,8 +312,8 @@
                 $(this).css('margin-left', $('#sidebar').hasClass('sidebar_shrink') ? '60px' : '200px');
             });
         });
-
     </script>
     @yield('scripts')
 </body>
+
 </html>

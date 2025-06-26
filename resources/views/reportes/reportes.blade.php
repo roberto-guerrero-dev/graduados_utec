@@ -1,5 +1,6 @@
 @extends('layouts.app') {{-- Asume que tienes un layout principal llamado app.blade.php --}}
 
+@section('title', 'Reportes de Graduados')
  @section('content')
  <div class="container">
      <div class="row">
@@ -71,10 +72,10 @@
                             {{-- Botón de Búsqueda --}}
                             <div class="col-12 d-grid gap-2 d-md-flex justify-content-md-end">
                                 <button type="submit" class="btn bg-primary-custom btn-sm fw-bold" id="btnBuscar">
-                                    <i class="fa-solid fa-filter"></i> Aplicar Filtros
+                                    <i class="fa-solid fa-magnifying-glass"></i> Aplicar Filtros
                                 </button>
                                 <button type="reset" class="btn btn-secondary btn-sm fw-bold">
-                                    <i class="fa-solid fa-xmark"></i> Limpiar Filtros
+                                    <i class="fa-solid fa-trash"></i> Limpiar Filtros
                                 </button>
                             </div>
                         </div>

@@ -190,7 +190,7 @@ class GraduadosController extends Controller
                 'ciclo_graduacion' => $validated['ciclo_graduacion'],
             ]);
 
-            return response()->json(['success' => true, 'message' => 'Graduado creado correctamente.'], 200);
+            return response()->json(['success' => true, 'message' => 'Graduado agregado correctamente.'], 200);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
@@ -258,7 +258,7 @@ class GraduadosController extends Controller
         if ($graduado) {
             $graduado->activo = 0;
             $graduado->save();
-            return response()->json(['success' => true, 'message' => 'Graduado desactivado correctamente.'], 200);
+            return response()->json(['success' => true, 'message' => 'Graduado eliminado correctamente.'], 200);
         } else {
             return response()->json(['success' => false, 'message' => 'Graduado no encontrado'], 404);
         }

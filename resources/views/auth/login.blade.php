@@ -4,34 +4,35 @@
 
 @section('content')
 <div class="container" style="margin-top: 150px;">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h4>Acceso</h4>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}" id="login-form">
-                            @csrf
-                            <div class="form-group mb-5">
-                                <label for="user">Usuario</label>
-                                <input type="text" name="email" id="user" class="form-control" required autofocus>
-                            </div>
-                            <div class="form-group mb-5">
-                                <label for="password">Contraseña</label>
-                                <input type="password" name="password" id="password" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn w-100" style="background-color: #5E0022; color: white;">Acceder <i class="fa-solid fa-arrow-up-from-bracket fa-rotate-90"></i></button>
-                            </div>
-                        </form>
-                    </div>
-                    
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <img src="{{ asset('img/logo-institucional-utec.jpeg') }}" alt="Imagen Institucional" class="mb-3" style="width: 100%; height: auto;">
+            <h4 class="text-center mb-4">Acceder al Sistema de Gestión de Graduados de Carreras Técnicas</h4>
+            <div class="card">
+                <div class="card-header text-center">
+                    <i class="fa-solid fa-user fa-5x mb-3" style="color: #5E0022;"></i>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}" id="login-form">
+                        @csrf
+                        <div class="form-group mb-5">
+                            <label for="user">Usuario</label>
+                            <input type="text" name="email" id="user" class="form-control" required autofocus>
+                        </div>
+                        <div class="form-group mb-5">
+                            <label for="password">Contraseña</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn w-100" style="background-color: #5E0022; color: white;">Acceder <i class="fa-solid fa-arrow-up-from-bracket fa-rotate-90"></i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
 
 @section('scripts')
 <script>
@@ -62,20 +63,12 @@
                         mensaje = data.message;
                     }
 
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error de acceso',
-                        text: mensaje,
-                    });
+                    customSwal.showAlert('Error de acceso', mensaje, '', 'Ok', 'bg-primary-custom', 'error');
                 }
             })
             .catch(error => {
                 console.error(error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Algo salió mal en el servidor.',
-                });
+                customSwal.showAlert('Error de conexión', 'Algo salió mal en el servidor.', '', 'Ok', 'bg-primary-custom', 'error');
             });
         });
     });

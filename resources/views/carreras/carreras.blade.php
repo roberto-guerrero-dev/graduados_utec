@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Carreras')
 @section('content')
 <div class="container bg-light mt-4">
     <div class="row">
@@ -19,7 +20,6 @@
                             <th>Codigo Carrera</th>
                             <th>Nombre Carrera</th>
                             <th>Modalidad</th>
-                            <th>Facultad</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -55,11 +55,16 @@
           <div class="row">
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Modalidad</label>
-                <input class="form-control form-control-sm mb-2" name="modalidad" placeholder="modalidad">
+                <select name="modalidad" class="form-select form-select-sm mb-2" >
+                    <option value="">Seleccione modalidad</option>
+                    <option value="Virtual">Virtual</option>
+                    <option value="Presencial">Presencial</option>
+                    <option value="Semipresencial">Semipresencial</option>
+                </select>
             </div>
             <div class="col-6">
                 <label class="col-form-label col-form-label-sm" for="">Facultad</label>
-                <select name="id_facultad" class="form-select form-select-sm mb-2" required>
+                <select name="id_facultad" class="form-select form-select-sm mb-2" >
                     <option value="">Seleccione facultad</option>   
                     @foreach($facultades as $facultad)
                                 <option value="{{ $facultad->id_facultad }}">{{ $facultad->nombre_facultad }}</option>
@@ -91,6 +96,16 @@ $(document).ready(function() {
     // Guardar o actualizar
     $('#formCarreras').submit(function(e) {
         e.preventDefault();
+
+        let codigo = $('input[name="codigo_carrera"]').val().trim();
+        let nombre = $('input[name="nombre"]').val().trim();
+        let modalidad = $('select[name="modalidad"]').val();
+        let id_facultad = $('select[name="id_facultad"]').val();
+
+        if (!codigo || !nombre || !modalidad || !id_facultad) {
+            customSwal.showAlert('Por favor, complete todos los campos.', '', '', 'Ok', 'bg-primary-custom', 'warning');
+            return;
+        }
         let id = $(this).attr('data-id');
 
         let method = id ? 'PUT' : 'POST';
@@ -101,7 +116,9 @@ $(document).ready(function() {
             method: method,
             data: $(this).serialize(),
             success: function(res) {
-                location.reload(); // recargar tabla
+                customSwal.showAlert(id ? 'Carrera actualizada exitosamente' : 'Carrera guardada exitosamente', '', '', 'Ok', 'bg-primary-custom', 'success');
+                $('#modalCarreras').modal('hide');
+                cargarTabla(); // recargar tabla
             },
             error: function(err) {
                 alert('Error al guardar' + err.responseText);
@@ -116,12 +133,14 @@ $(document).ready(function() {
             destroy: true,
             processing: true,
             responsive: true,
+            language: {
+                url: '/assets/lang/es-ES.json'
+            },
             ajax: '/carreras/data',
             columns: [
                 { data: 'codigo_carrera' },
                 { data: 'nombre' },
                 { data: 'modalidad' },
-                { data: 'id_facultad' },
                 {
                     data: null,
                     width: '80px',
@@ -148,18 +167,18 @@ function editarCarrera(id) {
             $('#formCarreras').attr('data-id', id);
             $('input[name="codigo_carrera"]').val(data.codigo_carrera);
             $('input[name="nombre"]').val(data.nombre);
-            $('input[name="modalidad"]').val(data.modalidad);
+            $('select[name="modalidad"]').val(data.modalidad);
             $('select[name="id_facultad"]').val(data.id_facultad);
             $('#modalCarreras').modal('show');
         },
         error: function(err) {
-            alert('Error al cargar los datos de la carrera');
+            customSwal.showAlert('Error al cargar los datos de la carrera', err.responseText, '', 'Ok', 'bg-primary-custom', 'error');
         }
     });
 }
 
 function eliminarCarrera(id) {
-    if (confirm('¿Estás seguro de eliminar esta carrera?')) {
+    customSwal.showConfirm('¿Estás seguro de eliminar esta carrera?', '', '', 'Eliminar', 'bg-primary-custom', 'Cancelar', 'bg-secondary', '', function() {
         $.ajax({
             url: `/carreras/${id}`,
             method: 'DELETE',
@@ -167,13 +186,21 @@ function eliminarCarrera(id) {
                 _token: '{{ csrf_token() }}'
             },
             success: function(res) {
-                location.reload(); // recargar tabla
+                customSwal.showAlert('Carrera eliminada exitosamente', '', '', 'Ok', 'bg-primary-custom', 'success');
+                $('#modalCarreras').modal('hide'); // Cerrar el modal si estaba abierto
+                cargarTabla(); // recargar tabla
             },
             error: function(err) {
-                alert('Error al eliminar la carrera');
+                customSwal.showAlert('Error al eliminar la carrera', err.responseText, '', 'Ok', 'bg-primary-custom', 'error');
             }
         });
-    }
+    });
 }
+
+$('#modalCarreras').on('hidden.bs.modal', function () {
+    $('#formCarreras').removeAttr('data-id'); // Limpiar el atributo data-id
+    $('#formCarreras')[0].reset(); // Limpiar el formulario
+    $('#modalLabel').text('Agregar Carrera'); // Resetear el título del modal
+});
 </script>
 @endsection

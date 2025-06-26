@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
+@section('title', 'Inicio')
 @section('content')
 <div class="container bg-white" >
     <div class="row">
         <div class="col-12 img-fluid d-flex justify-content-center user-select-none">
-            <img src="{{ asset('img/logo-institucional-utec.jpeg') }}" alt="Logo" class="img-fluid user-select-none" style="max-width: 100%; height: auto;">
+            <img src="{{ asset('img/logo-institucional-utec.jpeg') }}" alt="Logo" class="img-fluid user-select-none" style="width: 80%; height: auto;">
         </div>
     </div>
-    <h1 class="display-5 text-center">Sistema de Administración de Graduados de Carreras Técnicas</h1>
+    <h1 class="display-6 text-center">Sistema de Administración de Graduados de Carreras Técnicas</h1>
     <div class="row mt-5 justify-content-center">
         <div class="col-md-3 mb-4">
             <div class="card text-center shadow h-100" style="background-color: #F2D7D9;">

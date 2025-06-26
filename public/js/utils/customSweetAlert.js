@@ -23,8 +23,7 @@ var customSwal = {
             customClass: {
                 confirmButton: confirmButtonClass,
                 cancelButton: cancelButtonClass
-            },
-            buttonsStyling: false
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 callback();

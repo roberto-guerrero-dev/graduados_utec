@@ -48,7 +48,7 @@ class CarrerasController extends Controller
 
     public function data()
     {
-        $carreras = Carreras::all(); // Asegúrate de usar el modelo correcto
+        $carreras = Carreras::where('activo', '!=', 0)->get(); // Excluye los registros con activo = 0
         return response()->json(['data' => $carreras]);
     }
 }

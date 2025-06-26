@@ -50,7 +50,7 @@ class FacultadesController extends Controller
 
     public function data()
     {
-        $facultades = Facultades::all(); // Asegúrate de usar el modelo correcto
+        $facultades = Facultades::where('activo', '!=', 0)->get();
         return response()->json(['data' => $facultades]);
     }
 }

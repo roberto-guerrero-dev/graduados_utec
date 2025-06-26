@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Facultades')
 @section('content')
 <div class="container bg-light mt-4">
     <div class="row">
@@ -79,26 +80,50 @@ $(document).ready(function() {
         let method = id ? 'PUT' : 'POST';
         let url = id ? `/facultades/${id}` : '/facultades';
 
+        let codigo = $('input[name="codigo_facultad"]').val().trim();
+        let nombre = $('input[name="nombre_facultad"]').val().trim();
+
+        if (!codigo) {
+            customSwal.showAlert('El campo "Codigo" es obligatorio', '', '', 'Ok', 'bg-primary-custom', 'warning');
+            return;
+        }
+        if (!nombre) {
+            customSwal.showAlert('El campo "Nombre" es obligatorio', '', '', 'Ok', 'bg-primary-custom', 'warning');
+            return;
+        }
+
         $.ajax({
             url: url,
             method: method,
             data: $(this).serialize(),
             success: function(res) {
-                location.reload(); // recargar tabla
+                $('#modalFacultades').modal('hide');
+                $('input[name="codigo_facultad"]').val('');
+                $('input[name="nombre_facultad"]').val('');
+                $('#formFacultades').removeAttr('data-id'); // Limpiar el atributo data-id
+                customSwal.showAlert(id ? 'Se actualizó la facultad' : 'Se guardó la facultad', '', '', 'Ok',
+                        'bg-primary-custom', 'success');
+                cargarTabla(); // recargar tabla
             },
             error: function(err) {
-                alert('Error al guardar' + err.responseText);
+                customSwal.showAlert(err.responseText, '', '', 'Ok',
+                        'bg-primary-custom', 'error');
             }
         });
     });
 
 
-    function cargarTabla() {
+    
+});
+function cargarTabla() {
         
         $('#tablaFacultades').DataTable({
             destroy: true,
             processing: true,
             responsive: true,
+            language: {
+                url: '/assets/lang/es-ES.json'
+            },
             ajax: '/facultades/data',
             columns: [
                 { data: 'codigo_facultad' },
@@ -118,6 +143,9 @@ $(document).ready(function() {
             ]
         });
     }
+
+$('#modalFacultades').on('hidden.bs.modal', function () {
+    $('#formFacultades').removeAttr('data-id'); // Limpiar el atributo data-id
 });
 
 function editarFacultad(id) {
@@ -137,7 +165,7 @@ function editarFacultad(id) {
 }
 
 function eliminarFacultad(id) {
-    if (confirm('¿Estás seguro de eliminar esta facultad?')) {
+    customSwal.showConfirm('¿Estás seguro de eliminar esta facultad?', '', '', 'Eliminar', 'bg-primary-custom', 'Cancelar', 'bg-secondary','', function() {
         $.ajax({
             url: `/facultades/${id}`,
             method: 'DELETE',
@@ -145,13 +173,15 @@ function eliminarFacultad(id) {
                 _token: '{{ csrf_token() }}'
             },
             success: function() {
-                location.reload(); // recargar tabla
+                cargarTabla(); // recargar tabla
+                customSwal.showAlert('Se eliminó la facultad', '', '', 'Ok',
+                        'bg-primary-custom', 'success');
             },
             error: function(err) {
                 alert('Error al eliminar la facultad');
             }
         });
-    }
+    });
 }
 </script>
 @endsection

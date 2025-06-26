@@ -44,4 +44,16 @@ class LoginController extends Controller
     {
         dd('Login exitoso', Auth::check(), $user);
     }*/
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Usuario o contraseña incorrectos.'
+            ], 422); // status 422 para validación fallida
+        }
+
+        throw ValidationException::withMessages([
+            $this->username() => ['Estas credenciales no coinciden con nuestros registros.'],
+        ]);
+    }
 }

@@ -271,7 +271,7 @@ class GraduadosController extends Controller
             'nombres' => $g->nombres,
             'apellidos' => $g->apellidos,
             'genero' => $g->genero,
-            'codigo_carrera' => $gc->codigo_carrera,
+            'id_carrera' => $gc->id_carrera,
             'fecha_graduacion' => $gc->fecha_graduacion,
             'ciclo_graduacion' => $gc->ciclo_graduacion,
             'correos' => Correos::where('carnet_graduado', $g->carnet_graduado)->pluck('correo'),

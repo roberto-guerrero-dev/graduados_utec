@@ -146,6 +146,9 @@ function cargarTabla() {
 
 $('#modalFacultades').on('hidden.bs.modal', function () {
     $('#formFacultades').removeAttr('data-id'); // Limpiar el atributo data-id
+    $('input[name="codigo_facultad"]').val('');
+    $('input[name="nombre_facultad"]').val('');
+    $('#modalLabel').text('Agregar Facultad'); // Cambiar el título del modal
 });
 
 function editarFacultad(id) {
@@ -156,6 +159,7 @@ function editarFacultad(id) {
             $('input[name="codigo_facultad"]').val(data.codigo_facultad);
             $('input[name="nombre_facultad"]').val(data.nombre_facultad);
             $('#formFacultades').attr('data-id', id);
+            $('#modalLabel').text('Editar Facultad'); // Cambiar el título del modal
             $('#modalFacultades').modal('show');
         },
         error: function(err) {

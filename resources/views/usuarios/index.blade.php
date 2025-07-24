@@ -38,7 +38,7 @@
             <div class="modal-content">
                 <form id="formUsuario">
                     <div class="modal-header bg-primary-custom">
-                        <h5 class="modal-title">Usuario</h5>
+                        <h5 class="modal-title" id="usuarioModalLabel">Agregar Usuario</h5>
                         <button type="button" class="btn-close" data-bs-theme="dark" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -187,6 +187,7 @@
                 $('#name').val(user.name);
                 $('#email').val(user.email);
                 $('#password').val('');
+                $('#usuarioModalLabel').text('Editar Usuario');
                 $('#modalUsuario').modal('show');
             });
         }
@@ -226,6 +227,7 @@
             $('#formUsuario')[0].reset();
             $('#usuario_id').val('');
             $('#msgPassword').hide();
+            $('#usuarioModalLabel').text('Agregar Usuario');
         });
     </script>
 @endsection

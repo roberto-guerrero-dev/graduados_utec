@@ -372,6 +372,7 @@
 
                 // Agregar un atributo al formulario para saber que es edición
                 $('#formGraduadoCarrera').attr('data-id', id);
+                $('#graduadoModalLabel').text('Editar Graduado'); // Cambiar el título del modal
                 $('#graduadoModal').modal('show');
             }).fail(function() {
                 alert('Error al obtener los datos del graduado');
@@ -394,6 +395,7 @@
             $form.removeAttr('data-id');
             $('[name="carnet_graduado"]').prop('disabled', false); // Habilitar campo carnet
             $('#ciclo').removeClass('is-valid is-invalid'); // Limpiar validación del ciclo
+            $('#graduadoModalLabel').text('Registrar Graduado'); // Cambiar el título del modal
         });
 
         const cicloRegex = oRegEx.cicloRegEx();

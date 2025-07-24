@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $totalGraduados = Graduados::count();
+        $totalGraduados = Graduados::where('activo', '!=', 0)->count();
         $totalCarreras = Carreras::count();
         $totalFacultades = Facultades::count();
         return view('home', compact('totalGraduados', 'totalCarreras', 'totalFacultades'));

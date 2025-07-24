@@ -9,8 +9,8 @@ use App\Models\Facultades; // Asegúrate de usar el modelo correcto
 class CarrerasController extends Controller
 {
     public function index() {
-        $carreras = Carreras::all();
-        $facultades = Facultades::all();
+        $carreras = Carreras::where('activo', '!=', 0)->get();
+        $facultades = Facultades::where('activo', '!=', 0)->get();
         return view('carreras.carreras', compact('carreras', 'facultades'));
     }
 

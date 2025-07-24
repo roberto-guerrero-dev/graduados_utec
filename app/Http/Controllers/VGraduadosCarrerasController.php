@@ -9,7 +9,7 @@ class VGraduadosCarrerasController extends Controller
 {
     public function data()
     {
-        $data = VGraduadosCarreras::all();
+        $data = VGraduadosCarreras::where('activo', '!=', 0)->get();
         return response()->json(['data' => $data]);
     }
 }

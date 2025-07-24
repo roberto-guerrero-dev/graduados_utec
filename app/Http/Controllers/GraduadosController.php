@@ -21,7 +21,7 @@ class GraduadosController extends Controller
 {
     public function index()
     {
-        $graduados = Graduados::all();
+        $graduados = Graduados::where('activo', '!=', 0)->all();
         return view('graduados.index', compact('graduados'));
     }
 
@@ -44,7 +44,7 @@ class GraduadosController extends Controller
 
     public function createForm()
     {
-        $carreras = Carreras::all();
+        $carreras = Carreras::where('activo', '!=', 0)->get();
         $correos = Correos::pluck('correo'); // solo los correos únicos
         $telefonos = Telefonos::pluck('telefono');
 

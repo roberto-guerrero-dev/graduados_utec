@@ -127,7 +127,10 @@ $(document).ready(function() {
     });
 
 
-    function cargarTabla() {
+    
+});
+
+function cargarTabla() {
         
         $('#tablaCarreras').DataTable({
             destroy: true,
@@ -156,7 +159,6 @@ $(document).ready(function() {
             ]
         });
     }
-});
 
 function editarCarrera(id) {
     $.ajax({
@@ -187,8 +189,8 @@ function eliminarCarrera(id) {
             },
             success: function(res) {
                 customSwal.showAlert('Carrera eliminada exitosamente', '', '', 'Ok', 'bg-primary-custom', 'success');
-                $('#modalCarreras').modal('hide'); // Cerrar el modal si estaba abierto
                 cargarTabla(); // recargar tabla
+                $('#modalCarreras').modal('hide'); // Cerrar el modal si estaba abierto
             },
             error: function(err) {
                 customSwal.showAlert('Error al eliminar la carrera', err.responseText, '', 'Ok', 'bg-primary-custom', 'error');

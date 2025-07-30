@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-07-2025 a las 16:57:57
+-- Tiempo de generación: 30-07-2025 a las 17:31:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -36,7 +36,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_BuscarGraduados` (IN `p_fecha_in
         AND (p_modalidad IS NULL OR p_modalidad = '' OR modalidad = p_modalidad)
         AND (p_genero IS NULL OR p_genero = '' OR genero = p_genero)
         AND (p_carrera IS NULL OR p_carrera = '' OR carrera = p_carrera)
-        AND (p_facultad IS NULL OR p_facultad = '' OR facultad = p_facultad);
+        AND (p_facultad IS NULL OR p_facultad = '' OR facultad = p_facultad) AND activo != 0;
 END$$
 
 DELIMITER ;
@@ -292,7 +292,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('HxnuGCZcmslCDG6dFec2XtvZhgpJ8igOA3A2E10z', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoicGp5TkFIM0dKdlk1TTkyNU5YZVhSVk9mQ3FUeTNSa1VPNVl4S2hhZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ncmFkdWFkb3MvZm9ybSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUzMzcyNDA5O319', 1753379857);
+('HxnuGCZcmslCDG6dFec2XtvZhgpJ8igOA3A2E10z', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoicGp5TkFIM0dKdlk1TTkyNU5YZVhSVk9mQ3FUeTNSa1VPNVl4S2hhZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ncmFkdWFkb3MvZm9ybSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUzMzcyNDA5O319', 1753379857),
+('mk0J0MmCGjgU94enwEsm9yqNAY0bkdvksaF8kp3E', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMGRYWUtZaDdLVmhsYWpXM1YxWnlVM0FjeHc2c2dUb1E3blJ4elVCMCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ncmFkdWFkb3MvcmVwb3J0ZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUzODg3NzM5O319', 1753888981);
 
 -- --------------------------------------------------------
 

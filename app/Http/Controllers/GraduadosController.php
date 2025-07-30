@@ -53,9 +53,9 @@ class GraduadosController extends Controller
 
     public function reporteGraduados()
     {
-        $carreras = Carreras::all();
-        $facultades = Facultades::all();
-        $graduados = VGraduadosCarreras::all();
+        $carreras = Carreras::where('activo', '!=', 0)->get();
+        $facultades = Facultades::where('activo', '!=', 0)->get();
+        $graduados = VGraduadosCarreras::where('activo', '!=', 0)->get();
         return view('reportes.reportes', compact('carreras', 'facultades', 'graduados'));
     }
 
@@ -319,7 +319,7 @@ class GraduadosController extends Controller
 
     public function data()
     {
-        $graduados = Graduados::all(); // Asegúrate de usar el modelo correcto
+        $graduados = Graduados::where('activo', '!=', 0)->get(); // Asegúrate de usar el modelo correcto
         return response()->json(['data' => $graduados]);
     }
 
